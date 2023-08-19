@@ -1,5 +1,7 @@
 import React from "react";
 import "../Styles/NavBar.css";
+import { BsChevronDown } from "react-icons/bs";
+import { GoSearch } from "react-icons/go";
 
 function NavBar() {
   return (
@@ -17,13 +19,24 @@ function NavBar() {
       </div>
 
       <div className="searchBox">
+        <div className="search-icon">
+          {" "}
+          <GoSearch />
+        </div>
+
         <input type="text" placeholder="Search" />
       </div>
 
       <div className="rightNav">
         <div className="language">
-          <div>Music Languages</div>
-          <div className="languages">hindi</div>
+          <div>
+            <div>Music Languages</div>
+            <div className="languages">hindi</div>
+          </div>
+          <div className="lang-icon">
+            {" "}
+            <BsChevronDown />
+          </div>
         </div>
 
         <div className="logIn hov">Log In</div>

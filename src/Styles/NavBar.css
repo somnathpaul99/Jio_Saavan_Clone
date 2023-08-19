@@ -9,7 +9,8 @@
   font-weight: 600;
   font-family: "Roboto", sans-serif;
   color: rgba(0, 0, 0, 0.763);
-  position: sticky;
+  position: fixed;
+  z-index: 9999;
   border-bottom: 1px solid rgba(0, 0, 0, 0.148);
 }
 
@@ -56,8 +57,19 @@
   font-size: 16px;
 }
 
+.search-icon {
+  padding-left: 7px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+}
+
 .language {
   margin-right: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
 }
 
 .languages {

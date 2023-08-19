@@ -1,0 +1,39 @@
+.player {
+  height: 80px;
+  position: fixed;
+  bottom: 0;
+  background-color: #f9f5f6;
+  border-top: 1px solid #747172;
+  z-index: 99999;
+  min-width: 100vw;
+}
+
+.player-img {
+  height: 50px;
+}
+
+.player-icons-parent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.player-icons {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  gap: 20px;
+}
+
+.player-icon {
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.807);
+}
+
+.player-icon:hover {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.604);
+}
