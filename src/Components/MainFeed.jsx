@@ -1,6 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AllSongAlbumContext } from "../App";
 import "../Styles/MainFeed.css";
 
 const responsive = {
@@ -22,9 +23,9 @@ const responsive = {
   },
 };
 
-const Card = ({ title, artist, thumbnail }) => {
+const Card = ({ title, artist, thumbnail, onClick }) => {
   return (
-    <div className="card">
+    <div className="card" onClick={onClick}>
       <img className="card-img" src={thumbnail} alt={title} />
       <div className="card-title">{title}</div>
       <div className="card-artist">{artist}</div>
@@ -33,66 +34,20 @@ const Card = ({ title, artist, thumbnail }) => {
 };
 
 function MainFeed() {
-  const apiUrl = "https://academics.newtonschool.co/api/v1/music/song";
-  const albumApiUrl = "https://academics.newtonschool.co/api/v1/music/album";
-  const projectId = "dlzsedvtpspr";
-  const [songs, setSongs] = useState([]);
-  const [albums, setAlbums] = useState([]);
-  console.log("albums", albums);
-  console.log("songs", songs);
+  const { songs, albums, setCurrentSong } = useContext(AllSongAlbumContext);
 
-  useEffect(() => {
-    fetchData1();
-  }, []);
-
-  useEffect(() => {
-    fetchData2();
-  }, []);
-
-  const fetchData1 = async () => {
-    try {
-      const response = await fetch(apiUrl, {
-        headers: {
-          projectId: projectId,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const jsonData = await response.json();
-      setSongs(jsonData.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-  const fetchData2 = async () => {
-    try {
-      const response = await fetch(albumApiUrl, {
-        headers: {
-          projectId: projectId,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const jsonData = await response.json();
-      setAlbums(jsonData.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const handleAlbumID = (id) => {
+    console.log("AlbumId", id);
   };
 
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel responsive={responsive}>
       {songs.slice(startIndex, endIndex).map((song) => (
         <Card
+          onClick={() => setCurrentSong(song)}
           key={song._id}
           title={song.title}
-          artist={song.artist[0]?.name}
+          artist={song.artist[0]?.name + ", " + song.artist[1]?.name}
           thumbnail={song.thumbnail}
         />
       ))}
@@ -104,9 +59,10 @@ function MainFeed() {
       <Carousel responsive={responsive}>
         {albums.slice(startIndex, endIndex).map((album) => (
           <Card
+            onClick={() => handleAlbumID(album._id)}
             key={album._id}
             title={album.title}
-            artist={album.artists[0]?.name}
+            artist={album.artists[0]?.name + ", " + album.artists[1]?.name}
             thumbnail={album.image}
           />
         ))}

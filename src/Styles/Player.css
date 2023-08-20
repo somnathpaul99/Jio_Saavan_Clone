@@ -1,9 +1,9 @@
 .player {
-  height: 80px;
+  height: 85px;
   position: fixed;
   bottom: 0;
   background-color: #f9f5f6;
-  border-top: 1px solid #747172;
+  /* border-top: 1px solid #747172; */
   z-index: 99999;
   min-width: 100vw;
 }
@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 15px;
+  padding-top: 3px;
   margin-left: 40px;
   margin-right: 40px;
 }
@@ -36,4 +36,17 @@
 .player-icon:hover {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.604);
+}
+
+.duration {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+.progressBar {
+  margin-top: 0;
+  width: 99%;
+  cursor: pointer;
 }
