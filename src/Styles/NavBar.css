@@ -10,6 +10,7 @@
   font-family: "Roboto", sans-serif;
   color: rgba(0, 0, 0, 0.763);
   position: fixed;
+  top: 0;
   z-index: 9999;
   border-bottom: 1px solid rgba(0, 0, 0, 0.148);
 }
@@ -67,9 +68,9 @@
 .language {
   margin-right: 40px;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   align-items: center;
-  gap: 7px;
+  /* gap: 7px; */
 }
 
 .languages {
@@ -97,4 +98,15 @@
 
 .hov:hover {
   border-color: black;
+}
+
+.select-nav {
+  outline: none;
+  border: none;
+  background-color: #f9f5f6;
+  color: rgba(0, 0, 0, 0.763);
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
 }

@@ -8,20 +8,42 @@ import { HiPause } from "react-icons/hi";
 import { useState, useContext, useRef } from "react";
 import PlayingMusic from "./PlayingMusic";
 import { AllSongAlbumContext } from "../App";
+// import { audioPlayer } from "./PlayingMusic";
 
 function Player() {
-  const { currentSong, isPlaying, setIsPlaying } =
+  const { currentSong, isPlaying, setIsPlaying, duration } =
     useContext(AllSongAlbumContext);
+  const [currentTime, setCurrenttime] = useState(0);
   // const [isPlaying, setIsPlaying] = useState(false);
   // console.log("currentSong ", currentSong);
 
   const progressBar = useRef();
 
-  const handleProgress = () => {};
-
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
   };
+
+  const calculateTime = (sec) => {
+    const minutes = Math.floor(sec / 60);
+    const returnMin = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const seconds = Math.floor(sec % 60);
+    const returnSec = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${returnMin} : ${returnSec}`;
+  };
+
+  const handleProgress = () => {
+    // audioPlayer.current.currentTime = progressBar.current.value;
+    // changeCurrentTime();
+  };
+
+  // const changeCurrentTime = () => {
+  //   progressBar.current.style.setProperty(
+  //     "--played-width",
+  //     `${(progressBar.current.value / duration) * 100}%`
+  //   );
+
+  //   setCurrenttime(progressBar.current.value);
+  // };
 
   return (
     <div className="player">
@@ -31,6 +53,7 @@ function Player() {
           className="progressBar"
           ref={progressBar}
           onChange={handleProgress}
+          defaultValue="0"
         />
       </div>
       <div className="player-icons-parent">
@@ -51,7 +74,13 @@ function Player() {
           </div>
         </div>
         <div className="player-icons">
-          <div className="duration">0.0/2.4</div>
+          <div className="duration">
+            {calculateTime(currentTime)}
+            {" / "}
+            {duration && !isNaN(duration) && calculateTime(duration)
+              ? duration && !isNaN(duration) && calculateTime(duration)
+              : "00:00"}
+          </div>
           <div className="player-icon">
             <AiTwotoneSound />
           </div>

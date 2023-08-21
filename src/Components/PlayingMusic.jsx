@@ -3,7 +3,7 @@ import "../Styles/PlayingMusic.css";
 import { AllSongAlbumContext } from "../App";
 
 function PlayingMusic() {
-  const { currentSong, isPlaying, setIsPlaying } =
+  const { currentSong, isPlaying, setIsPlaying, duration, setDuration } =
     useContext(AllSongAlbumContext);
   console.log("CurrentsongPlaying", currentSong);
 
@@ -11,7 +11,7 @@ function PlayingMusic() {
     return null;
   }
 
-  const [duration, setDuration] = useState(0);
+  // const [duration, setDuration] = useState(0);
   // console.log("duration", duration);
 
   const audioPlayer = useRef();
@@ -49,7 +49,10 @@ function PlayingMusic() {
         <div>
           <div className="playing-title">{currentSong.title}</div>
           <div className="playing-artist">
-            {currentSong.artist[0]?.name + ", " + currentSong.artist[1]?.name}
+            {(currentSong.artist[0]?.name ? currentSong.artist[0]?.name : "") +
+              (currentSong.artist[1]?.name
+                ? ", " + currentSong.artist[1]?.name
+                : "")}
           </div>
         </div>
       </div>

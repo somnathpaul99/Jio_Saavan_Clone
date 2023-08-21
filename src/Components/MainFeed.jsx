@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import { useContext } from "react";
 import { AllSongAlbumContext } from "../App";
 import "../Styles/MainFeed.css";
+import { useNavigate } from "react-router-dom";
 
 const responsive = {
   superLargeDesktop: {
@@ -34,20 +35,28 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 };
 
 function MainFeed() {
-  const { songs, albums, setCurrentSong } = useContext(AllSongAlbumContext);
+  const { songs, albums, setCurrentSong, setDuration, setAlbumsId } =
+    useContext(AllSongAlbumContext);
+  const navigate = useNavigate();
 
   const handleAlbumID = (id) => {
-    console.log("AlbumId", id);
+    navigate("/albums");
   };
 
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel responsive={responsive}>
       {songs.slice(startIndex, endIndex).map((song) => (
         <Card
-          onClick={() => setCurrentSong(song)}
+          onClick={() => {
+            setCurrentSong(song);
+            setDuration("0:0");
+          }}
           key={song._id}
           title={song.title}
-          artist={song.artist[0]?.name + ", " + song.artist[1]?.name}
+          artist={
+            (song.artist[0]?.name ? song.artist[0]?.name : "") +
+            (song.artist[1]?.name ? ", " + song.artist[1]?.name : "")
+          }
           thumbnail={song.thumbnail}
         />
       ))}
@@ -59,10 +68,15 @@ function MainFeed() {
       <Carousel responsive={responsive}>
         {albums.slice(startIndex, endIndex).map((album) => (
           <Card
-            onClick={() => handleAlbumID(album._id)}
+            onClick={() => {
+              handleAlbumID(album._id), setAlbumsId(album._id);
+            }}
             key={album._id}
             title={album.title}
-            artist={album.artists[0]?.name + ", " + album.artists[1]?.name}
+            artist={
+              (album.artists[0]?.name ? album.artists[0]?.name : "") +
+              (album.artists[1]?.name ? ", " + album.artists[1]?.name : "")
+            }
             thumbnail={album.image}
           />
         ))}
@@ -72,7 +86,7 @@ function MainFeed() {
 
   return (
     <div className="main-feed">
-      <div className="trending">Trending Now</div>
+      <div className="trending ">Trending Now</div>
       {generateCarouselForSongs(0, 15)}
       {generateCarouselForSongs(15, 30)}
 
@@ -83,6 +97,21 @@ function MainFeed() {
       <div className="new-release">New Releases</div>
       {generateCarouselForSongs(30, 45)}
       {generateCarouselForSongs(45, 60)}
+
+      <div className="new-release">Albums</div>
+      {generateCarouselForAlbums(9, 24)}
+      {generateCarouselForAlbums(24, 39)}
+      {generateCarouselForAlbums(39, 54)}
+      {generateCarouselForAlbums(54, 69)}
+
+      <div className="new-release">Trending Podcasts</div>
+      {generateCarouselForSongs(60, 75)}
+      {generateCarouselForSongs(75, 90)}
+      {generateCarouselForSongs(90, 100)}
+
+      <div className="new-release">Top Albums </div>
+      {generateCarouselForAlbums(69, 84)}
+      {generateCarouselForAlbums(84, 100)}
     </div>
   );
 }

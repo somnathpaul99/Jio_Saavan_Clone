@@ -33,10 +33,10 @@ const Card = ({ title, artist, thumbnail }) => {
 };
 
 export function GenerateCarouselForSongs(startIndex, endIndex) {
-  const { songs } = useContext(AllSongAlbumContext);
+  const { filteredSongs } = useContext(AllSongAlbumContext);
   return (
     <Carousel responsive={responsive}>
-      {songs.slice(startIndex, endIndex).map((song) => (
+      {filteredSongs.slice(startIndex, endIndex).map((song) => (
         <Card
           key={song._id}
           title={song.title}

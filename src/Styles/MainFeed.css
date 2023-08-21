@@ -1,5 +1,6 @@
 .main-feed {
   margin-left: 43px;
+  margin-bottom: 100px;
 }
 
 .card {
@@ -40,8 +41,8 @@
   margin-bottom: 10px;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
-  color: #545357d1;
-  font-size: 15px;
+  color: #201f20c1;
+  font-size: 18px;
 }
 
 .new-release {
