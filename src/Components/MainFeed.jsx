@@ -44,7 +44,15 @@ function MainFeed() {
   };
 
   const generateCarouselForSongs = (startIndex, endIndex) => (
-    <Carousel responsive={responsive}>
+    <Carousel
+      // swipeable={false}
+      // draggable={false}
+      responsive={responsive}
+      infinite={true}
+      autoPlay={true}
+      autoPlaySpeed={2000}
+      slidesToSlide={1}
+    >
       {songs.slice(startIndex, endIndex).map((song) => (
         <Card
           onClick={() => {
@@ -109,7 +117,7 @@ function MainFeed() {
       {generateCarouselForSongs(75, 90)}
       {generateCarouselForSongs(90, 100)}
 
-      <div className="new-release">Top Albums </div>
+      <div className="new-release">Top Playlists </div>
       {generateCarouselForAlbums(69, 84)}
       {generateCarouselForAlbums(84, 100)}
     </div>

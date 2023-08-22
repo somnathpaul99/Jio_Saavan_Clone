@@ -3,6 +3,9 @@ import JioSaavan from "./Components/JioSaavan";
 import { createContext, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Albums from "./Components/Albums";
+import Login from "./Components/Login";
+import SignOut from "./Components/SignOut";
+import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
 
 export const AllSongAlbumContext = createContext();
@@ -19,6 +22,9 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [filteredSongs, setFilteredSongs] = useState([]);
+  const [selectedMood, setSelectedMood] = useState("");
+  const [search, setSearch] = useState("");
+  const [searchItem, setSearchedItems] = useState([]);
   console.log("AppFilteredSongs", filteredSongs);
   console.log("CurrentSong", currentSong);
   // console.log("albums", albums);
@@ -87,6 +93,12 @@ function App() {
           setAlbumsId,
           filteredSongs,
           setFilteredSongs,
+          selectedMood,
+          setSelectedMood,
+          search,
+          setSearch,
+          searchItem,
+          setSearchedItems,
         }}
       >
         <BrowserRouter>
@@ -94,6 +106,9 @@ function App() {
             <Route path="/" element={<JioSaavan />} />
             <Route path="/albums" element={<Albums />} />
             <Route path="/filter-songs" element={<FilteredSongs />} />
+            <Route path="/log-in" element={<Login />} />
+            <Route path="/sign-out" element={<SignOut />} />
+            <Route path="/search" element={<SearchItem />} />
             {/* <Route path="*" element={<Errror />} /> */}
           </Routes>
         </BrowserRouter>

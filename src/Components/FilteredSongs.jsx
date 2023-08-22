@@ -1,7 +1,7 @@
 import NavBar from "./NavBar";
 import Player from "./Player";
 import SideBar from "./SideBar";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AllSongAlbumContext } from "../App";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -37,7 +37,35 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 };
 
 function FilteredSongs() {
-  const { filteredSongs, setCurrentSong } = useContext(AllSongAlbumContext);
+  const projectId = "dlzsedvtpspr";
+  const { setCurrentSong, selectedMood } = useContext(AllSongAlbumContext);
+  const [filteredSongs, setFilteredSongs] = useState([]);
+
+  const fetchSongsByMood = () => {
+    if (selectedMood) {
+      fetch(
+        `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${selectedMood}"}`,
+        {
+          headers: {
+            projectId: projectId,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("filteredData", data);
+          setFilteredSongs(data.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching songs:", error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    fetchSongsByMood();
+  }, [selectedMood]);
+
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel responsive={responsive}>
       {filteredSongs.slice(startIndex, endIndex).map((song) => (

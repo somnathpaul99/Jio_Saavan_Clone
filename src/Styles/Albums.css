@@ -59,6 +59,9 @@
   width: 600px;
   cursor: pointer;
 }
+.album-card:hover {
+  background-color: #a7a6a6;
+}
 
 .album-card-img {
   height: 60px;

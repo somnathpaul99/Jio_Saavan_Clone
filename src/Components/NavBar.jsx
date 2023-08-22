@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../Styles/NavBar.css";
 import { BsChevronDown } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
@@ -6,32 +6,47 @@ import { useNavigate } from "react-router-dom";
 import { AllSongAlbumContext } from "../App";
 
 function NavBar() {
-  const { setFilteredSongs } = useContext(AllSongAlbumContext);
-  const [selectedMood, setSelectedMood] = useState("");
+  const {
+    songs,
+    setFilteredSongs,
+    selectedMood,
+    setSelectedMood,
+    search,
+    setSearch,
+    searchItem,
+    setSearchedItems,
+  } = useContext(AllSongAlbumContext);
+  // const [selectedMood, setSelectedMood] = useState("");
   const projectId = "dlzsedvtpspr";
+  // const [searchItem, setSearchedItems] = useState([]);
+  // console.log("SearchSongs", searchItem);
 
   const navigate = useNavigate();
 
-  const fetchSongsByMood = () => {
-    if (selectedMood) {
-      fetch(
-        `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${selectedMood}"}`,
-        {
-          headers: {
-            projectId: projectId,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("filteredData", data);
-          setFilteredSongs(data.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching songs:", error);
-        });
+  const [loginUser, setLoginUser] = useState([]);
+
+  useEffect(() => {
+    const storedLogin = JSON.parse(localStorage.getItem("user_login"));
+    // console.log("Stored login data:", storedLogin);
+
+    if (storedLogin) {
+      setLoginUser(storedLogin[0].name);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!search) {
+      // navigate("/");
+      return;
+    }
+
+    const filteredItems = songs.filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase())
+    );
+    // console.log(filteredItems);
+    setSearchedItems(filteredItems);
+    navigate("/search");
+  }, [search]);
 
   const handleMoodChange = (event) => {
     const newMood = event.target.value;
@@ -39,10 +54,22 @@ function NavBar() {
     navigate("/filter-songs");
   };
 
+  const handleNavLogo = () => {
+    navigate("/");
+  };
+
+  const handleLogIn = () => {
+    navigate("/log-in");
+  };
+
+  const handleSignOut = () => {
+    navigate("/sign-out");
+  };
+
   return (
     <div className="NavBar">
       <div className="leftNav">
-        <div className="Saavan-logo">
+        <div className="Saavan-logo" onClick={handleNavLogo}>
           <img className="logo" src="./logo.png" alt="Jio Saavan Logo" />
         </div>
 
@@ -56,10 +83,17 @@ function NavBar() {
       <div className="searchBox">
         <div className="search-icon">
           {" "}
+          {/* <button onClick={handleSearch}> */}
           <GoSearch />
+          {/* </button> */}
         </div>
 
-        <input type="text" placeholder="Search" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search"
+        />
       </div>
 
       <div className="rightNav">
@@ -73,10 +107,10 @@ function NavBar() {
             <BsChevronDown />
           </div> */}
           <select
-            onClick={fetchSongsByMood}
             value={selectedMood}
             onChange={handleMoodChange}
             className="select-nav"
+            // onClick={fetchSongsByMood}
           >
             <option value="" className="languages">
               Select Mood
@@ -87,9 +121,27 @@ function NavBar() {
           </select>
         </div>
 
-        <div className="logIn hov">Log In</div>
+        <div onClick={handleLogIn} className="logIn hov">
+          Log In
+        </div>
 
-        <div className="signOut hov">Sign Out</div>
+        <div onClick={handleSignOut} className="signOut hov">
+          Sign Out
+        </div>
+        {/* <div>
+  {loginUser.length === 0 ? (
+    <div>
+      <div onClick={handleLogIn} className="logIn hov">
+        Log In
+      </div>
+      <div onClick={handleSignOut} className="signOut hov">
+        Sign Out
+      </div>
+    </div>
+  ) : (
+    "Sp"
+  )}
+</div> */}
       </div>
     </div>
   );
