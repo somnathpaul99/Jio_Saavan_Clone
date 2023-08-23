@@ -7,6 +7,7 @@ import Login from "./Components/Login";
 import SignOut from "./Components/SignOut";
 import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
+import CurrentPlayingSong from "./Components/CurrentPlayingSong";
 
 export const AllSongAlbumContext = createContext();
 
@@ -25,6 +26,7 @@ function App() {
   const [selectedMood, setSelectedMood] = useState("");
   const [search, setSearch] = useState("");
   const [searchItem, setSearchedItems] = useState([]);
+  const [isLogIn, setIsLogIn] = useState(false);
   console.log("AppFilteredSongs", filteredSongs);
   console.log("CurrentSong", currentSong);
   // console.log("albums", albums);
@@ -99,6 +101,8 @@ function App() {
           setSearch,
           searchItem,
           setSearchedItems,
+          isLogIn,
+          setIsLogIn,
         }}
       >
         <BrowserRouter>
@@ -109,6 +113,10 @@ function App() {
             <Route path="/log-in" element={<Login />} />
             <Route path="/sign-out" element={<SignOut />} />
             <Route path="/search" element={<SearchItem />} />
+            {/* <Route
+              path="/current-song-playing"
+              element={<CurrentPlayingSong />}
+            /> */}
             {/* <Route path="*" element={<Errror />} /> */}
           </Routes>
         </BrowserRouter>

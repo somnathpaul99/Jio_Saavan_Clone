@@ -61,10 +61,45 @@ h3 {
   justify-content: center;
 }
 
-p {
-  margin-left: 120px;
+.log-in-heading {
+  font-size: 36px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  color: #000000c6;
 }
 
-.h1-tag {
-  color: rgba(0, 0, 0, 0.74);
+.input-login {
+  width: 400px;
+  margin-top: 10px;
+  height: 44px;
+  border-radius: 20px;
+  border: none;
+  border: 1px solid rgba(128, 128, 128, 0.677);
+  padding-left: 15px;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+p {
+  margin-top: 15px;
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  color: #000000ba;
+}
+
+.button-signIn {
+  width: 416px;
+  margin-top: 25px;
+  height: 44px;
+  border-radius: 40px;
+  font-family: "Roboto", sans-serif;
+  background-color: rgb(60 176 119);
+  font-size: 18px;
+  color: white;
+  border: none;
+}
+
+.button-signIn:hover {
+  background-color: rgb(33, 136, 86);
+  cursor: pointer;
 }

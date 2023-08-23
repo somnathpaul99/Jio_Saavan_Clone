@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import "../Styles/NavBar.css";
 import { BsChevronDown } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
@@ -15,26 +15,29 @@ function NavBar() {
     setSearch,
     searchItem,
     setSearchedItems,
+    isLogIn,
   } = useContext(AllSongAlbumContext);
-  // const [selectedMood, setSelectedMood] = useState("");
-  const projectId = "dlzsedvtpspr";
-  // const [searchItem, setSearchedItems] = useState([]);
-  // console.log("SearchSongs", searchItem);
+
+  console.log("isLogIn", isLogIn);
+
+  const searchInputRef = useRef(null);
 
   const navigate = useNavigate();
 
   const [loginUser, setLoginUser] = useState([]);
+  console.log("userName", loginUser);
 
   useEffect(() => {
-    const storedLogin = JSON.parse(localStorage.getItem("user_login"));
+    const storedLogin = localStorage.getItem("username");
     // console.log("Stored login data:", storedLogin);
 
     if (storedLogin) {
-      setLoginUser(storedLogin[0].name);
+      setLoginUser(storedLogin);
     }
   }, []);
 
   useEffect(() => {
+    searchInputRef.current.focus();
     if (!search) {
       // navigate("/");
       return;
@@ -91,6 +94,7 @@ function NavBar() {
         <input
           type="text"
           value={search}
+          ref={searchInputRef}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search"
         />

@@ -1,7 +1,6 @@
 import "../Styles/Login.css";
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import React, { useContext, useState } from "react";
+import { AllSongAlbumContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { setIsLogIn } = useContext(AllSongAlbumContext);
 
   const [userInput, setUserInput] = useState({
     email: "",
@@ -29,10 +29,10 @@ function Login() {
     });
   };
 
-  const addData = (e) => {
+  const addData = async (e) => {
     e.preventDefault();
 
-    const getuserArr = localStorage.getItem("users");
+    // const getuserArr = localStorage.getItem("users");
     // console.log(getuserArr);
 
     const { email, password } = userInput;
@@ -40,7 +40,7 @@ function Login() {
       toast.error("Email field is required", {
         position: "top-center",
       });
-    } else if (!email.includes("@")) {
+    } else if (!email.includes("@" && ".")) {
       toast.error("Please enter valid email address", {
         position: "top-center",
       });
@@ -48,28 +48,50 @@ function Login() {
       toast.error("Password field is required", {
         position: "top-center",
       });
-    } else if (password.length < 5) {
-      toast.error("Password length should be greater five", {
-        position: "top-center",
-      });
+    } else if (
+      !password.match(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
+      )
+    ) {
+      toast.error(
+        "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter, one number, and one special symbol",
+        {
+          position: "top-center",
+        }
+      );
     } else {
-      if (getuserArr && getuserArr.length) {
-        const userdata = JSON.parse(getuserArr);
-        const userlogin = userdata.filter((ele) => {
-          return ele.email === email && ele.password === password;
+      try {
+        const apiUrl = "https://academics.newtonschool.co/api/v1/user/login";
+        const appType = "music";
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            projectId: "dlzsedvtpspr",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            appType: appType,
+          }),
         });
 
-        if (userlogin.length === 0) {
-          toast.error("Invalid Details", {
-            position: "top-center",
-          });
-        } else {
-          // console.log("user login succesfulyy");
-
-          localStorage.setItem("user_login", JSON.stringify(userlogin));
-
+        if (response.ok) {
+          const data = await response.json();
+          console.log("data", data);
+          console.log(JSON.stringify(data.token));
+          localStorage.setItem("token", data.token);
+          toast.success("Successfully Logged In");
+          localStorage.setItem("username", data.data.name);
+          localStorage.setItem("email", data.data.email);
+          setIsLogIn(true);
           navigate("/");
+        } else {
+          toast.error("Login Failed: Invalid Username or Password");
+          console.log(error);
         }
+      } catch (error) {
+        toast.error(error);
       }
     }
   };
@@ -84,46 +106,30 @@ function Login() {
       </div>
       <div className="login-right">
         <section className=" login-right-container">
-          <div className="left_data mt-3 p-3" style={{ width: "70%" }}>
-            <h1 className="text-center h1-tag col-lg-12">
-              Welcome to JioSaavn.
-            </h1>
-            <Form className="form-container">
-              <Form.Group className="mb-3 col-lg-8" controlId="formBasicEmail">
-                <Form.Control
-                  type="email"
-                  name="email"
-                  onChange={getdata}
-                  placeholder="Enter email"
-                />
-              </Form.Group>
+          <div className="form-container">
+            <h1 className="log-in-heading">Welcome to JioSaavn.</h1>
+            <div className="form-container">
+              <input
+                className="input-login"
+                type="email"
+                name="email"
+                onChange={getdata}
+                placeholder="Enter email"
+              />
 
-              <Form.Group
-                className="mb-3 col-lg-8"
-                controlId="formBasicPassword"
-              >
-                <Form.Control
-                  type="password"
-                  name="password"
-                  onChange={getdata}
-                  placeholder="Set Password"
-                />
-              </Form.Group>
+              <input
+                className="input-login"
+                type="password"
+                name="password"
+                onChange={getdata}
+                placeholder="Enter Password"
+              />
 
-              <Button
-                variant="primary"
-                className="col-lg-8 submit-button button-signIn"
-                onClick={addData}
-                style={{
-                  background: "rgb(67, 185, 127)",
-                  borderRadius: "15px",
-                }}
-                type="submit"
-              >
-                Log in
-              </Button>
-            </Form>
-            <p className="mt-3 ">
+              <button className="button-signIn" onClick={addData} type="submit">
+                Log In
+              </button>
+            </div>
+            <p className="go-to">
               Go to{" "}
               <span>
                 <NavLink to="/sign-out">Sign Up</NavLink>
