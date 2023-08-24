@@ -1,43 +1,19 @@
-import { useState, useContext, useRef, useEffect } from "react";
+import { useContext } from "react";
 import "../Styles/PlayingMusic.css";
 import { AllSongAlbumContext } from "../App";
 
+console.log("PlayingMusic component loaded");
+
 function PlayingMusic() {
-  const { currentSong, isPlaying, setIsPlaying, duration, setDuration } =
-    useContext(AllSongAlbumContext);
+  const { currentSong } = useContext(AllSongAlbumContext);
   console.log("CurrentsongPlaying", currentSong);
 
   if (!currentSong) {
     return null;
   }
 
-  // const [duration, setDuration] = useState(0);
-  // console.log("duration", duration);
-
-  const audioPlayer = useRef();
-
-  useEffect(() => {
-    changePlayPause();
-    findDuration();
-  }, [isPlaying]);
-
-  const changePlayPause = () => {
-    // setIsPlaying(!isPlaying);
-    if (isPlaying) {
-      audioPlayer.current.play();
-    } else {
-      audioPlayer.current.pause();
-    }
-  };
-
-  const findDuration = () => {
-    const seconds = Math.floor(audioPlayer.current.duration);
-    setDuration(seconds);
-  };
-
   return (
     <>
-      <audio src={currentSong.audio_url} ref={audioPlayer} />
       <div className="playing-container">
         <div>
           <img

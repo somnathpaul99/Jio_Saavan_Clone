@@ -7,7 +7,6 @@ import Login from "./Components/Login";
 import SignOut from "./Components/SignOut";
 import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
-import CurrentPlayingSong from "./Components/CurrentPlayingSong";
 
 export const AllSongAlbumContext = createContext();
 
@@ -27,11 +26,29 @@ function App() {
   const [search, setSearch] = useState("");
   const [searchItem, setSearchedItems] = useState([]);
   const [isLogIn, setIsLogIn] = useState(false);
-  console.log("AppFilteredSongs", filteredSongs);
-  console.log("CurrentSong", currentSong);
+  const [userName, setUserName] = useState("");
+  // console.log("AppFilteredSongs", filteredSongs);
+  // console.log("CurrentSong", currentSong);
   // console.log("albums", albums);
-  console.log("songs", songs);
+  // console.log("songs", songs);
   // console.log("AlbumsIDApp", albumsId);
+  console.log("islogInApp", isLogIn);
+
+  useEffect(() => {
+    const storedLogin = localStorage.getItem("login");
+
+    if (storedLogin) {
+      setIsLogIn(storedLogin);
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedLogin = localStorage.getItem("username");
+
+    if (storedLogin) {
+      setUserName(storedLogin);
+    }
+  }, []);
 
   useEffect(() => {
     fetchData1();
@@ -103,6 +120,8 @@ function App() {
           setSearchedItems,
           isLogIn,
           setIsLogIn,
+          userName,
+          setUserName,
         }}
       >
         <BrowserRouter>

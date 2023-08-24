@@ -72,7 +72,7 @@ function SignOut() {
 
         if (response.ok) {
           toast.success("Signup successful!.");
-          navigate("/");
+          navigate("log-in");
           console.log("Response", response);
         } else {
           toast.error("Signup Failed");

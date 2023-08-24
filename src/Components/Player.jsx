@@ -5,48 +5,70 @@ import { IoPlaySkipForward } from "react-icons/io5";
 import { AiTwotoneSound } from "react-icons/ai";
 import { MdOutlineOpenInFull } from "react-icons/md";
 import { HiPause } from "react-icons/hi";
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import PlayingMusic from "./PlayingMusic";
 import { AllSongAlbumContext } from "../App";
 import CurrentPlayingSong from "./CurrentPlayingSong";
-// import { audioPlayer } from "./PlayingMusic";
 
 function Player() {
-  const { currentSong, isPlaying, setIsPlaying, duration } =
+  const { currentSong, isPlaying, setIsPlaying, duration, setDuration } =
     useContext(AllSongAlbumContext);
-  const [currentTime, setCurrenttime] = useState(0);
   const [isOpenInFull, setIsOpenInFull] = useState(false);
-  console.log("OpenISFull", isOpenInFull);
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // console.log("currentSong ", currentSong);
+  const [isVolume, setIsVolume] = useState(false);
+  const [volume, setVolume] = useState(30);
+  const [currentTime, setCurrentTime] = useState(0);
 
-  const progressBar = useRef();
+  const audioPlayer = useRef();
+
+  useEffect(() => {
+    if (audioPlayer) {
+      audioPlayer.current.volume = volume / 100;
+    }
+    if (isPlaying) {
+      setInterval(() => {
+        const _duration = Math.floor(audioPlayer?.current?.duration);
+        const _currentTime = Math.floor(audioPlayer?.current?.currentTime);
+
+        setDuration(_duration);
+        setCurrentTime(_currentTime);
+      }, 100);
+    }
+  }, [volume, isPlaying]);
+
+  const changePlayPause = () => {
+    if (isPlaying) {
+      audioPlayer.current.play();
+    } else {
+      audioPlayer.current.pause();
+    }
+  };
 
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
+    changePlayPause();
   };
 
-  const calculateTime = (sec) => {
-    const minutes = Math.floor(sec / 60);
-    const returnMin = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const seconds = Math.floor(sec % 60);
-    const returnSec = seconds < 10 ? `0${seconds}` : `${seconds}`;
-    return `${returnMin} : ${returnSec}`;
+  function formatTime(time) {
+    if (time && !isNaN(time)) {
+      const minutes =
+        Math.floor(time / 60) < 10
+          ? `0${Math.floor(time / 60)}`
+          : Math.floor(time / 60);
+      const seconds =
+        Math.floor(time % 60) < 10
+          ? `0${Math.floor(time % 60)}`
+          : Math.floor(time % 60);
+
+      return `${minutes}:${seconds}`;
+    }
+    return "00:00";
+  }
+
+  const halhleChangeTrack = (type) => {};
+
+  const handleVolume = () => {
+    setIsVolume(!isVolume);
   };
-
-  const handleProgress = () => {
-    // audioPlayer.current.currentTime = progressBar.current.value;
-    // changeCurrentTime();
-  };
-
-  // const changeCurrentTime = () => {
-  //   progressBar.current.style.setProperty(
-  //     "--played-width",
-  //     `${(progressBar.current.value / duration) * 100}%`
-  //   );
-
-  //   setCurrenttime(progressBar.current.value);
-  // };
 
   const handleOpenInFull = () => {
     setIsOpenInFull(!isOpenInFull);
@@ -54,6 +76,7 @@ function Player() {
 
   return (
     <>
+      <audio src={currentSong.audio_url} ref={audioPlayer} />
       {currentSong && Object.keys(currentSong).length > 0 && (
         <div
           className={
@@ -73,9 +96,9 @@ function Player() {
           <input
             type="range"
             className="progressBar"
-            ref={progressBar}
-            onChange={handleProgress}
-            defaultValue="0"
+            value={currentTime}
+            max={duration}
+            onChange={(e) => setCurrentTime(e.target.value)}
           />
         </div>
         <div className="player-icons-parent">
@@ -85,26 +108,40 @@ function Player() {
             )}
           </div>
           <div className="player-icons">
-            <div className="player-icon">
+            <div
+              className="player-icon"
+              onClick={() => halhleChangeTrack("prev")}
+            >
               <IoPlaySkipBack />
             </div>
             <div className="player-icon" onClick={handlePlay}>
-              {isPlaying ? <HiPause /> : <IoPlay />}
+              {isPlaying ? <IoPlay /> : <HiPause />}
             </div>
-            <div className="player-icon">
+            <div
+              className="player-icon"
+              onClick={() => halhleChangeTrack("next")}
+            >
               <IoPlaySkipForward />
             </div>
           </div>
           <div className="player-icons">
             <div className="duration">
-              {calculateTime(currentTime)}
+              {formatTime(currentTime)}
               {" / "}
-              {duration && !isNaN(duration) && calculateTime(duration)
-                ? duration && !isNaN(duration) && calculateTime(duration)
-                : "00:00"}
+              {formatTime(duration)}
             </div>
-            <div className="player-icon">
-              <AiTwotoneSound />
+            <div className="player-icon volume">
+              <input
+                className={isVolume ? "volume-control" : "volume-control-none"}
+                type="range"
+                value={volume}
+                onChange={(e) => setVolume(e.target.value)}
+                max={100}
+              />
+              <div onClick={handleVolume}>
+                {" "}
+                <AiTwotoneSound />
+              </div>
             </div>
             <div className="player-icon" onClick={handleOpenInFull}>
               <MdOutlineOpenInFull />

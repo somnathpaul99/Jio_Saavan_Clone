@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const navigate = useNavigate();
-  const { setIsLogIn } = useContext(AllSongAlbumContext);
+  const { setIsLogIn, setUserName } = useContext(AllSongAlbumContext);
 
   const [userInput, setUserInput] = useState({
     email: "",
@@ -85,6 +85,8 @@ function Login() {
           localStorage.setItem("username", data.data.name);
           localStorage.setItem("email", data.data.email);
           setIsLogIn(true);
+          localStorage.setItem("login", true);
+          setUserName(data.data.name);
           navigate("/");
         } else {
           toast.error("Login Failed: Invalid Username or Password");

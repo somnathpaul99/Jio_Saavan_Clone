@@ -4,6 +4,42 @@ import { BsChevronDown } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { AllSongAlbumContext } from "../App";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//from MUI
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = "#";
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+//from MUI
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+      // bgcolor: "#EF6262",
+    },
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+  };
+}
 
 function NavBar() {
   const {
@@ -16,9 +52,14 @@ function NavBar() {
     searchItem,
     setSearchedItems,
     isLogIn,
+    setIsLogIn,
+    userName,
   } = useContext(AllSongAlbumContext);
+  const [logToggle, setLogToggle] = useState(false);
 
   console.log("isLogIn", isLogIn);
+  // console.log("isLogIn2", isLogIn);
+  console.log("usernameagain", userName);
 
   const searchInputRef = useRef(null);
 
@@ -39,7 +80,6 @@ function NavBar() {
   useEffect(() => {
     searchInputRef.current.focus();
     if (!search) {
-      // navigate("/");
       return;
     }
 
@@ -69,6 +109,16 @@ function NavBar() {
     navigate("/sign-out");
   };
 
+  const handleLogOut = () => {
+    localStorage.clear();
+    setIsLogIn(false);
+    setLogToggle(!logToggle);
+    navigate("/");
+    toast.success("You are logged Out", {
+      position: "top-center",
+    });
+  };
+
   return (
     <div className="NavBar">
       <div className="leftNav">
@@ -86,9 +136,7 @@ function NavBar() {
       <div className="searchBox">
         <div className="search-icon">
           {" "}
-          {/* <button onClick={handleSearch}> */}
           <GoSearch />
-          {/* </button> */}
         </div>
 
         <input
@@ -102,19 +150,10 @@ function NavBar() {
 
       <div className="rightNav">
         <div className="language">
-          {/* <div>
-            <div>Music Languages</div>
-            <div className="languages">hindi</div>
-          </div>
-          <div className="lang-icon">
-            {" "}
-            <BsChevronDown />
-          </div> */}
           <select
             value={selectedMood}
             onChange={handleMoodChange}
             className="select-nav"
-            // onClick={fetchSongsByMood}
           >
             <option value="" className="languages">
               Select Mood
@@ -125,28 +164,29 @@ function NavBar() {
           </select>
         </div>
 
-        <div onClick={handleLogIn} className="logIn hov">
-          Log In
+        <div className="avatar-container">
+          {isLogIn ? ( // Checking if the user is logged in
+            <div className="nav-avatar logIn">
+              <div className="avatar">
+                <Avatar {...(userName ? stringAvatar(userName) : {})} />
+              </div>
+              <div onClick={handleLogOut} className="log-out hov">
+                Log Out
+              </div>
+            </div>
+          ) : (
+            <div className="nav-log-in">
+              <div onClick={handleLogIn} className=" hov">
+                Log In
+              </div>
+              <div onClick={handleSignOut} className="signOut hov">
+                Sign Out
+              </div>
+            </div>
+          )}
         </div>
-
-        <div onClick={handleSignOut} className="signOut hov">
-          Sign Out
-        </div>
-        {/* <div>
-  {loginUser.length === 0 ? (
-    <div>
-      <div onClick={handleLogIn} className="logIn hov">
-        Log In
       </div>
-      <div onClick={handleSignOut} className="signOut hov">
-        Sign Out
-      </div>
-    </div>
-  ) : (
-    "Sp"
-  )}
-</div> */}
-      </div>
+      <ToastContainer />
     </div>
   );
 }
