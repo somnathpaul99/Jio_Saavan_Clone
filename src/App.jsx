@@ -1,12 +1,13 @@
 import "./App.css";
 import JioSaavan from "./Components/JioSaavan";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Albums from "./Components/Albums";
 import Login from "./Components/Login";
-import SignOut from "./Components/SignOut";
+import SignUp from "./Components/SignUp";
 import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
+import UnderConstruction from "./Components/UnderConstruction";
 
 export const AllSongAlbumContext = createContext();
 
@@ -33,6 +34,13 @@ function App() {
   // console.log("songs", songs);
   // console.log("AlbumsIDApp", albumsId);
   console.log("islogInApp", isLogIn);
+
+  const newReleasesRef = useRef(null);
+  const topChartsRef = useRef(null);
+  const topPlaylistsRef = useRef(null);
+  const podcastsRef = useRef(null);
+  const songsRef = useRef(null);
+  const albumsRef = useRef(null);
 
   useEffect(() => {
     const storedLogin = localStorage.getItem("login");
@@ -122,6 +130,12 @@ function App() {
           setIsLogIn,
           userName,
           setUserName,
+          newReleasesRef,
+          topChartsRef,
+          topPlaylistsRef,
+          podcastsRef,
+          songsRef,
+          albumsRef,
         }}
       >
         <BrowserRouter>
@@ -130,8 +144,9 @@ function App() {
             <Route path="/albums" element={<Albums />} />
             <Route path="/filter-songs" element={<FilteredSongs />} />
             <Route path="/log-in" element={<Login />} />
-            <Route path="/sign-out" element={<SignOut />} />
+            <Route path="/sign-up" element={<SignUp />} />
             <Route path="/search" element={<SearchItem />} />
+            <Route path="/under-construction" element={<UnderConstruction />} />
             {/* <Route
               path="/current-song-playing"
               element={<CurrentPlayingSong />}

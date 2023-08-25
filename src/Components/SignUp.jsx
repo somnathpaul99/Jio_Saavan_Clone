@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function SignOut() {
+function SignUp() {
   const navigate = useNavigate();
 
   // const [data, setData] = useState([]);
@@ -75,7 +75,7 @@ function SignOut() {
           navigate("log-in");
           console.log("Response", response);
         } else {
-          toast.error("Signup Failed");
+          toast.error("User Already Exists");
         }
       } catch (error) {
         toast.error("Internal server problem. Please try again later.");
@@ -138,4 +138,4 @@ function SignOut() {
   );
 }
 
-export default SignOut;
+export default SignUp;

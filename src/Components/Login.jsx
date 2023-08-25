@@ -134,7 +134,7 @@ function Login() {
             <p className="go-to">
               Go to{" "}
               <span>
-                <NavLink to="/sign-out">Sign Up</NavLink>
+                <NavLink to="/sign-up">Sign Up</NavLink>
               </span>{" "}
             </p>
           </div>

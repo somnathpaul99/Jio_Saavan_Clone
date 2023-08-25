@@ -34,8 +34,19 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 };
 
 function MainFeed() {
-  const { songs, albums, setCurrentSong, setDuration, setAlbumsId } =
-    useContext(AllSongAlbumContext);
+  const {
+    songs,
+    albums,
+    setCurrentSong,
+    setDuration,
+    setAlbumsId,
+    newReleasesRef,
+    topChartsRef,
+    topPlaylistsRef,
+    podcastsRef,
+    songsRef,
+    albumsRef,
+  } = useContext(AllSongAlbumContext);
   const navigate = useNavigate();
 
   const handleAlbumID = (id) => {
@@ -97,26 +108,36 @@ function MainFeed() {
       {generateCarouselForSongs(0, 15)}
       {generateCarouselForSongs(15, 30)}
 
-      <div className="new-release">Top Charts</div>
+      <div ref={topChartsRef} className="new-release">
+        Top Charts
+      </div>
       {generateCarouselForAlbums(0, 5)}
       {generateCarouselForAlbums(5, 9)}
 
-      <div className="new-release">New Releases</div>
+      <div ref={newReleasesRef} className="new-release">
+        New Releases
+      </div>
       {generateCarouselForSongs(30, 45)}
       {generateCarouselForSongs(45, 60)}
 
-      <div className="new-release">Albums</div>
+      <div ref={albumsRef} className="new-release">
+        Albums
+      </div>
       {generateCarouselForAlbums(9, 24)}
       {generateCarouselForAlbums(24, 39)}
       {generateCarouselForAlbums(39, 54)}
       {generateCarouselForAlbums(54, 69)}
 
-      <div className="new-release">Trending Podcasts</div>
+      <div ref={podcastsRef} className="new-release">
+        Trending Podcasts
+      </div>
       {generateCarouselForSongs(60, 75)}
       {generateCarouselForSongs(75, 90)}
       {generateCarouselForSongs(90, 100)}
 
-      <div className="new-release">Top Playlists </div>
+      <div ref={topPlaylistsRef} className="new-release">
+        Top Playlists | Music | Songs{" "}
+      </div>
       {generateCarouselForAlbums(69, 84)}
       {generateCarouselForAlbums(84, 100)}
     </div>

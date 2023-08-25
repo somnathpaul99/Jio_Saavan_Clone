@@ -48,6 +48,16 @@
   background-color: white;
   display: flex;
   align-items: center;
+  cursor: text;
+}
+
+#searchInput {
+  border: none;
+  outline: none;
+  flex: 1;
+  height: 100%;
+  margin-left: 5px;
+  font-size: 16px;
 }
 
 .searchBox > input {

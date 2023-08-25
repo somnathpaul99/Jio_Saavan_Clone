@@ -41,6 +41,12 @@ function stringAvatar(name) {
   };
 }
 
+const scrollToSection = (ref) => {
+  if (ref.current) {
+    ref.current.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
 function NavBar() {
   const {
     songs,
@@ -54,6 +60,8 @@ function NavBar() {
     isLogIn,
     setIsLogIn,
     userName,
+    topPlaylistsRef,
+    podcastsRef,
   } = useContext(AllSongAlbumContext);
   const [logToggle, setLogToggle] = useState(false);
 
@@ -105,8 +113,8 @@ function NavBar() {
     navigate("/log-in");
   };
 
-  const handleSignOut = () => {
-    navigate("/sign-out");
+  const handleSignUp = () => {
+    navigate("/sign-up");
   };
 
   const handleLogOut = () => {
@@ -119,6 +127,10 @@ function NavBar() {
     });
   };
 
+  const handleClick = () => {
+    navigate("/under-construction");
+  };
+
   return (
     <div className="NavBar">
       <div className="leftNav">
@@ -126,11 +138,23 @@ function NavBar() {
           <img className="logo" src="./logo.png" alt="Jio Saavan Logo" />
         </div>
 
-        <div className="music hov">Music</div>
+        <div
+          onClick={() => scrollToSection(topPlaylistsRef)}
+          className="music hov"
+        >
+          Music
+        </div>
 
-        <div className="podcasts hov">Podcasts</div>
+        <div
+          onClick={() => scrollToSection(podcastsRef)}
+          className="podcasts hov"
+        >
+          Podcasts
+        </div>
 
-        <div className="goPro hov">Go Pro</div>
+        <div onClick={handleClick} className="goPro hov">
+          Go Pro
+        </div>
       </div>
 
       <div className="searchBox">
@@ -141,6 +165,7 @@ function NavBar() {
 
         <input
           type="text"
+          id="searchInput"
           value={search}
           ref={searchInputRef}
           onChange={(e) => setSearch(e.target.value)}
@@ -179,8 +204,8 @@ function NavBar() {
               <div onClick={handleLogIn} className=" hov">
                 Log In
               </div>
-              <div onClick={handleSignOut} className="signOut hov">
-                Sign Out
+              <div onClick={handleSignUp} className="signOut hov">
+                Sign Up
               </div>
             </div>
           )}
