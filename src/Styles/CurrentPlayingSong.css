@@ -79,3 +79,9 @@
   font-size: 18px;
   color: rgba(0, 0, 0, 0.901);
 }
+
+@media screen and (max-width: 900px) {
+  .current-box-container {
+    left: 0;
+  }
+}

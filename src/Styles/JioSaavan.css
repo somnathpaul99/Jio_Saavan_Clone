@@ -14,3 +14,14 @@
   width: 87%;
   background-color: #f9f5f6;
 }
+
+@media screen and (max-width: 900px) {
+  .side-bar {
+    display: none;
+  }
+  .feed {
+    width: 100%;
+    position: relative;
+    top: 0;
+  }
+}

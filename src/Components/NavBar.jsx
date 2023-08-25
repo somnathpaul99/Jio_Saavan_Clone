@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import "../Styles/NavBar.css";
-import { BsChevronDown } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { AllSongAlbumContext } from "../App";
@@ -64,7 +64,8 @@ function NavBar() {
     podcastsRef,
   } = useContext(AllSongAlbumContext);
   const [logToggle, setLogToggle] = useState(false);
-
+  const [menuOpen, setMenuOpen] = useState(false);
+  console.log("menuOprn", menuOpen);
   console.log("isLogIn", isLogIn);
   // console.log("isLogIn2", isLogIn);
   console.log("usernameagain", userName);
@@ -122,6 +123,7 @@ function NavBar() {
     setIsLogIn(false);
     setLogToggle(!logToggle);
     navigate("/");
+    setMenuOpen(false);
     toast.success("You are logged Out", {
       position: "top-center",
     });
@@ -131,74 +133,57 @@ function NavBar() {
     navigate("/under-construction");
   };
 
+  const handleMenuOpen = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <div className="NavBar">
-      <div className="leftNav">
-        <div className="Saavan-logo" onClick={handleNavLogo}>
-          <img className="logo" src="./logo.png" alt="Jio Saavan Logo" />
-        </div>
+    <>
+      {" "}
+      <div className="NavBar">
+        <div className="leftNav">
+          <div className="Saavan-logo" onClick={handleNavLogo}>
+            <img className="logo" src="./logo.png" alt="Jio Saavan Logo" />
+          </div>
 
-        <div
-          onClick={() => scrollToSection(topPlaylistsRef)}
-          className="music hov"
-        >
-          Music
-        </div>
-
-        <div
-          onClick={() => scrollToSection(podcastsRef)}
-          className="podcasts hov"
-        >
-          Podcasts
-        </div>
-
-        <div onClick={handleClick} className="goPro hov">
-          Go Pro
-        </div>
-      </div>
-
-      <div className="searchBox">
-        <div className="search-icon">
-          {" "}
-          <GoSearch />
-        </div>
-
-        <input
-          type="text"
-          id="searchInput"
-          value={search}
-          ref={searchInputRef}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search"
-        />
-      </div>
-
-      <div className="rightNav">
-        <div className="language">
-          <select
-            value={selectedMood}
-            onChange={handleMoodChange}
-            className="select-nav"
+          <div
+            onClick={() => scrollToSection(topPlaylistsRef)}
+            className="music hov no-tab"
           >
-            <option value="" className="languages">
-              Select Mood
-            </option>
-            <option value="sad">Sad</option>
-            <option value="excited">Excited</option>
-            <option value="romantic">Romantic</option>
-          </select>
+            Music
+          </div>
+
+          <div
+            onClick={() => scrollToSection(podcastsRef)}
+            className="podcasts hov no-tab"
+          >
+            Podcasts
+          </div>
+
+          <div onClick={handleClick} className="goPro hov no-tab">
+            Go Pro
+          </div>
         </div>
 
-        <div className="avatar-container">
-          {isLogIn ? ( // Checking if the user is logged in
-            <div className="nav-avatar logIn">
-              <div className="avatar">
-                <Avatar {...(userName ? stringAvatar(userName) : {})} />
-              </div>
-              <div onClick={handleLogOut} className="log-out hov">
-                Log Out
-              </div>
-            </div>
+        <div className="searchBox">
+          <div className="search-icon">
+            {" "}
+            <GoSearch />
+          </div>
+
+          <input
+            type="text"
+            id="searchInput"
+            value={search}
+            ref={searchInputRef}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search"
+          />
+        </div>
+
+        <div className="avatar tab">
+          {isLogIn ? (
+            <Avatar {...(userName ? stringAvatar(userName) : {})} />
           ) : (
             <div className="nav-log-in">
               <div onClick={handleLogIn} className=" hov">
@@ -210,9 +195,90 @@ function NavBar() {
             </div>
           )}
         </div>
+
+        <div onClick={handleMenuOpen} className="hamburger tab">
+          <GiHamburgerMenu />
+        </div>
+
+        <div className="rightNav no-tab">
+          <div className="language">
+            <select
+              value={selectedMood}
+              onChange={handleMoodChange}
+              className="select-nav"
+            >
+              <option value="" className="languages">
+                Select Mood
+              </option>
+              <option value="sad">Sad</option>
+              <option value="excited">Excited</option>
+              <option value="romantic">Romantic</option>
+            </select>
+          </div>
+
+          <div className="avatar-container no-tab">
+            {isLogIn ? ( // Checking if the user is logged in
+              <div className="nav-avatar logIn">
+                <div className="avatar">
+                  <Avatar {...(userName ? stringAvatar(userName) : {})} />
+                </div>
+                <div onClick={handleLogOut} className="log-out hov">
+                  Log Out
+                </div>
+              </div>
+            ) : (
+              <div className="nav-log-in">
+                <div onClick={handleLogIn} className=" hov">
+                  Log In
+                </div>
+                <div onClick={handleSignUp} className="signOut hov">
+                  Sign Up
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+      <div className="tab">
+        <div className={`${menuOpen ? " menu-open-container" : "no-tab"}`}>
+          <div
+            onClick={() => scrollToSection(topPlaylistsRef)}
+            className=" hov "
+          >
+            Music
+          </div>
+
+          <div onClick={() => scrollToSection(podcastsRef)} className=" hov ">
+            Podcasts
+          </div>
+
+          <div onClick={handleClick} className=" hov ">
+            Go Pro
+          </div>
+
+          <div className="select-tab">
+            <select
+              value={selectedMood}
+              onChange={handleMoodChange}
+              className="select-nav"
+            >
+              <option value="" className="languages">
+                Select Mood
+              </option>
+              <option value="sad">Sad</option>
+              <option value="excited">Excited</option>
+              <option value="romantic">Romantic</option>
+            </select>
+          </div>
+          {isLogIn ? (
+            <div onClick={handleLogOut} className=" hov">
+              Log Out
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </>
   );
 }
 

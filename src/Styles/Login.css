@@ -103,3 +103,50 @@ p {
   background-color: rgb(33, 136, 86);
   cursor: pointer;
 }
+
+@media screen and (max-width: 900px) {
+  .login-conatiner {
+    flex-direction: column-reverse;
+    height: 100vh;
+  }
+
+  .login-right {
+    width: 100%;
+    padding-bottom: 30px;
+  }
+  .login-left {
+    width: 100%;
+    position: unset;
+  }
+  .login-logo {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+  }
+  .login-img {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .login-conatiner {
+    height: 100%;
+  }
+  .login-img {
+    width: 250px;
+  }
+  .login-left {
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 15px;
+  }
+  .form-container > input {
+    width: 100%;
+  }
+  .form-container > h1 {
+    font-size: 32px;
+  }
+  .button-signIn {
+    width: 275px;
+  }
+}
