@@ -1,12 +1,12 @@
 import NavBar from "./NavBar";
 import Player from "./Player";
-import SideBar from "./SideBar";
 import { useContext, useState, useEffect } from "react";
 import { AllSongAlbumContext } from "../App";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../Styles/FilteredSongs.css";
 
+//from multi-carousel library
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -26,6 +26,7 @@ const responsive = {
   },
 };
 
+//for all cards details
 const Card = ({ title, artist, thumbnail, onClick }) => {
   return (
     <div className="card" onClick={onClick}>
@@ -38,9 +39,11 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 
 function FilteredSongs() {
   const projectId = "dlzsedvtpspr";
+  //getting state and function from App file
   const { setCurrentSong, selectedMood } = useContext(AllSongAlbumContext);
   const [filteredSongs, setFilteredSongs] = useState([]);
 
+  //fetching data which is selected in navBar by mood option
   const fetchSongsByMood = () => {
     if (selectedMood) {
       fetch(
@@ -66,13 +69,13 @@ function FilteredSongs() {
     fetchSongsByMood();
   }, [selectedMood]);
 
+  //creating this generateCarouselForSongs for showing card by choice like 10 to 20 card from Songs array
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel responsive={responsive}>
       {filteredSongs.slice(startIndex, endIndex).map((song) => (
         <Card
           onClick={() => {
             setCurrentSong(song);
-            setDuration("0:0");
           }}
           key={song._id}
           title={song.title}
@@ -90,7 +93,6 @@ function FilteredSongs() {
       <div>
         <NavBar />
       </div>
-      <div>{/* <SideBar /> */}</div>
       <div>
         <div className="mod ">Music You Choose</div>
         <div className="mod-card">

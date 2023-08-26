@@ -14,14 +14,13 @@ const AlbumCard = ({ song, onClick }) => {
 };
 
 function Albums() {
-  const { albumsId, setCurrentSong } = useContext(AllSongAlbumContext);
-  console.log("AlbumsIdFromAlbum", albumsId);
   const projectId = "dlzsedvtpspr";
-  //   const albumId = "64cee72fe41f6d0a8b0cd0a7";
 
+  //Getting all satate and function from App file
+  const { albumsId, setCurrentSong } = useContext(AllSongAlbumContext);
   const [albumData, setAlbumData] = useState(null);
-  console.log("albumData", albumData);
 
+  //fetching all data of albums by ID
   useEffect(() => {
     fetch(`https://academics.newtonschool.co/api/v1/music/album/${albumsId}`, {
       headers: {
@@ -38,14 +37,12 @@ function Albums() {
       });
   }, []);
 
-  if (!albumData) {
-    return null;
-  }
-
+  //showing Loading until getting data
   if (!albumData) {
     return <div>Loading...</div>;
   }
 
+  //if no data available on albums then showing this
   if (!albumData.songs || !Array.isArray(albumData.songs)) {
     return <div>No songs available.</div>;
   }

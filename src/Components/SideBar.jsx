@@ -8,6 +8,7 @@ import { AllSongAlbumContext } from "../App";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+//for going to that component which clicked from SideBar
 const scrollToSection = (ref) => {
   if (ref.current) {
     ref.current.scrollIntoView({ behavior: "smooth" });
@@ -16,6 +17,8 @@ const scrollToSection = (ref) => {
 
 function SideBar() {
   const navigate = useNavigate();
+
+  //getting all ref from App file
   const {
     newReleasesRef,
     topChartsRef,
@@ -24,6 +27,7 @@ function SideBar() {
     albumsRef,
   } = useContext(AllSongAlbumContext);
 
+  //handle dead links
   const handleClick = () => {
     navigate("/under-construction");
   };

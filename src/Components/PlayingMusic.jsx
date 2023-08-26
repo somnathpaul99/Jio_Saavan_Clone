@@ -2,11 +2,9 @@ import { useContext } from "react";
 import "../Styles/PlayingMusic.css";
 import { AllSongAlbumContext } from "../App";
 
-console.log("PlayingMusic component loaded");
-
+//this component will render from Player for showing small image on Player left corner
 function PlayingMusic() {
   const { currentSong } = useContext(AllSongAlbumContext);
-  console.log("CurrentsongPlaying", currentSong);
 
   if (!currentSong) {
     return null;

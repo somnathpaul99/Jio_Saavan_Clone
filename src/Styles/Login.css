@@ -107,7 +107,7 @@ p {
 @media screen and (max-width: 900px) {
   .login-conatiner {
     flex-direction: column-reverse;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   .login-right {
@@ -135,7 +135,7 @@ p {
     width: 250px;
   }
   .login-left {
-    height: auto;
+    height: fit-content;
     align-items: center;
     justify-content: center;
     padding-bottom: 15px;

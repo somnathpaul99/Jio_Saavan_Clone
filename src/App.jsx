@@ -8,6 +8,7 @@ import SignUp from "./Components/SignUp";
 import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
 import UnderConstruction from "./Components/UnderConstruction";
+import Error from "./Components/Error";
 
 export const AllSongAlbumContext = createContext();
 
@@ -28,12 +29,6 @@ function App() {
   const [searchItem, setSearchedItems] = useState([]);
   const [isLogIn, setIsLogIn] = useState(false);
   const [userName, setUserName] = useState("");
-  // console.log("AppFilteredSongs", filteredSongs);
-  // console.log("CurrentSong", currentSong);
-  // console.log("albums", albums);
-  // console.log("songs", songs);
-  // console.log("AlbumsIDApp", albumsId);
-  console.log("islogInApp", isLogIn);
 
   const newReleasesRef = useRef(null);
   const topChartsRef = useRef(null);
@@ -42,6 +37,7 @@ function App() {
   const songsRef = useRef(null);
   const albumsRef = useRef(null);
 
+  //If user logged in then storing the boolean value in local storage
   useEffect(() => {
     const storedLogin = localStorage.getItem("login");
 
@@ -50,6 +46,7 @@ function App() {
     }
   }, []);
 
+  //If user logged in then storing the user name in local storage
   useEffect(() => {
     const storedLogin = localStorage.getItem("username");
 
@@ -66,6 +63,7 @@ function App() {
     fetchData2();
   }, []);
 
+  //Fetch data for Songs
   const fetchData1 = async () => {
     try {
       const response = await fetch(apiUrl, {
@@ -84,6 +82,8 @@ function App() {
       console.error("Error fetching data:", error);
     }
   };
+
+  //Fetch data for Albums
   const fetchData2 = async () => {
     try {
       const response = await fetch(albumApiUrl, {
@@ -147,11 +147,7 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/search" element={<SearchItem />} />
             <Route path="/under-construction" element={<UnderConstruction />} />
-            {/* <Route
-              path="/current-song-playing"
-              element={<CurrentPlayingSong />}
-            /> */}
-            {/* <Route path="*" element={<Errror />} /> */}
+            <Route path="*" element={<Error />} />
           </Routes>
         </BrowserRouter>
       </AllSongAlbumContext.Provider>

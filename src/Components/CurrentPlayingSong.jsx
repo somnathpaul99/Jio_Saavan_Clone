@@ -1,13 +1,18 @@
 import "../Styles/CurrentPlayingSong.css";
 
+//this component will render when click on for full  from Player
 function CurrentPlayingSong({ isPlaying, currentSong, setIsPlaying }) {
+  //if clicked on play button then set value on true
   const handlePlaySong = () => {
-    // console.log("click");
     if (isPlaying === false) {
       setIsPlaying(true);
-      //   console.log("checking", isPlaying);
     }
   };
+
+  //id current song empty then return
+  if (!currentSong) {
+    return null;
+  }
   return (
     <>
       <div className="current-box-container">

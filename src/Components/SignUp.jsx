@@ -8,18 +8,19 @@ import "react-toastify/dist/ReactToastify.css";
 function SignUp() {
   const navigate = useNavigate();
 
-  // const [data, setData] = useState([]);
   const userInputRef = useRef({
     name: "",
     email: "",
     password: "",
   });
 
+  //this will call when put any word on input
   const getdata = (e) => {
     const { value, name } = e.target;
     userInputRef.current[name] = value;
   };
 
+  //when clicked on Sign Up it will call
   const addData = async (e) => {
     e.preventDefault();
 

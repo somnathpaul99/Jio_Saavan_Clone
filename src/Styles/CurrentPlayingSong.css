@@ -5,7 +5,7 @@
   background-color: #f9f5f6;
   position: fixed;
   top: 61px;
-  left: 150px;
+  left: 0;
   right: 0;
   bottom: 80px;
   z-index: 99999;
@@ -80,8 +80,30 @@
   color: rgba(0, 0, 0, 0.901);
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 700px) {
   .current-box-container {
     left: 0;
+  }
+  .upper-details {
+    display: flex;
+    flex-direction: column;
+  }
+  .left-side-current {
+    margin-left: 46px;
+    margin-top: 40px;
+  }
+  .current-img {
+    width: 250px;
+  }
+  .current-heading {
+    font-size: 30px;
+    margin-top: -40px;
+  }
+  .play-btn {
+    margin-top: 20px;
+  }
+  .lower-details {
+    margin-left: 50px;
+    margin-top: 46px;
   }
 }

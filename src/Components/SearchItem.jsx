@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../Styles/SearchItem.css";
 
+//This is from multi-carousel library
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -26,6 +27,7 @@ const responsive = {
   },
 };
 
+//Creating this for all card details
 const Card = ({ title, artist, thumbnail, onClick }) => {
   return (
     <div className="card" onClick={onClick}>
@@ -37,16 +39,20 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 };
 
 function SearchItem() {
-  const { search, searchItem, setCurrentSong } =
-    useContext(AllSongAlbumContext);
   const navigate = useNavigate();
 
+  //getting all state, function from App file
+  const { search, searchItem, setCurrentSong } =
+    useContext(AllSongAlbumContext);
+
+  //if search box is empty then going to main page
   useEffect(() => {
     if (!search) {
       navigate("/");
     }
   }, [search]);
 
+  //creating this generateCarouselForSongs for showing card by choice like 10 to 20 card from Songs array
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel responsive={responsive}>
       {searchItem.slice(startIndex, endIndex).map((song) => (

@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const navigate = useNavigate();
+
+  //getting state and function from App file
   const { setIsLogIn, setUserName } = useContext(AllSongAlbumContext);
 
   const [userInput, setUserInput] = useState({
@@ -15,11 +17,9 @@ function Login() {
     password: "",
   });
 
+  //this will call when put any word on input
   const getdata = (e) => {
-    // console.log(e.target.value);
-
     const { value, name } = e.target;
-    // console.log(value,name);
 
     setUserInput(() => {
       return {
@@ -29,11 +29,9 @@ function Login() {
     });
   };
 
+  //when clicked on Log In it will call
   const addData = async (e) => {
     e.preventDefault();
-
-    // const getuserArr = localStorage.getItem("users");
-    // console.log(getuserArr);
 
     const { email, password } = userInput;
     if (email === "") {

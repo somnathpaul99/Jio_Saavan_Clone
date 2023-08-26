@@ -5,6 +5,7 @@ import { AllSongAlbumContext } from "../App";
 import "../Styles/MainFeed.css";
 import { useNavigate } from "react-router-dom";
 
+//This is from multi-carousel library
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -23,6 +24,8 @@ const responsive = {
     items: 2,
   },
 };
+
+//Creating this for all card details
 const Card = ({ title, artist, thumbnail, onClick }) => {
   return (
     <div className="card" onClick={onClick}>
@@ -34,29 +37,28 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 };
 
 function MainFeed() {
+  const navigate = useNavigate();
+  //getting all state, function and ref from App file
   const {
     songs,
     albums,
     setCurrentSong,
-    setDuration,
     setAlbumsId,
     newReleasesRef,
     topChartsRef,
     topPlaylistsRef,
     podcastsRef,
-    songsRef,
     albumsRef,
   } = useContext(AllSongAlbumContext);
-  const navigate = useNavigate();
 
+  //when clicked on any album card then going to /albums route and showing all song and data
   const handleAlbumID = (id) => {
     navigate("/albums");
   };
 
+  //creating this generateCarouselForSongs for showing card by choice like 10 to 20 card from Songs array
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel
-      // swipeable={false}
-      // draggable={false}
       responsive={responsive}
       infinite={true}
       autoPlay={true}
@@ -67,7 +69,6 @@ function MainFeed() {
         <Card
           onClick={() => {
             setCurrentSong(song);
-            setDuration("0:0");
           }}
           key={song._id}
           title={song.title}
@@ -81,6 +82,7 @@ function MainFeed() {
     </Carousel>
   );
 
+  //creating this generateCarouselForAlbums for showing card by choice like 10 to 20 card from albums array
   const generateCarouselForAlbums = (startIndex, endIndex) => {
     return (
       <Carousel responsive={responsive}>

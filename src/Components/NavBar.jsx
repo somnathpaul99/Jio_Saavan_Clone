@@ -5,7 +5,6 @@ import { GoSearch } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { AllSongAlbumContext } from "../App";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -41,6 +40,7 @@ function stringAvatar(name) {
   };
 }
 
+//for going to that component which clicked from navBar
 const scrollToSection = (ref) => {
   if (ref.current) {
     ref.current.scrollIntoView({ behavior: "smooth" });
@@ -48,14 +48,13 @@ const scrollToSection = (ref) => {
 };
 
 function NavBar() {
+  //Getting all satate and function and ref from App file
   const {
     songs,
-    setFilteredSongs,
     selectedMood,
     setSelectedMood,
     search,
     setSearch,
-    searchItem,
     setSearchedItems,
     isLogIn,
     setIsLogIn,
@@ -63,61 +62,63 @@ function NavBar() {
     topPlaylistsRef,
     podcastsRef,
   } = useContext(AllSongAlbumContext);
+
   const [logToggle, setLogToggle] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  console.log("menuOprn", menuOpen);
-  console.log("isLogIn", isLogIn);
-  // console.log("isLogIn2", isLogIn);
-  console.log("usernameagain", userName);
+  const [loginUser, setLoginUser] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
 
   const searchInputRef = useRef(null);
-
   const navigate = useNavigate();
 
-  const [loginUser, setLoginUser] = useState([]);
-  console.log("userName", loginUser);
-
+  //checking if user name present in local storage then storing in loginUser
   useEffect(() => {
     const storedLogin = localStorage.getItem("username");
-    // console.log("Stored login data:", storedLogin);
-
     if (storedLogin) {
       setLoginUser(storedLogin);
     }
   }, []);
 
+  //for Searching
   useEffect(() => {
+    //for focusing on Search box
     searchInputRef.current.focus();
+
     if (!search) {
       return;
     }
 
+    //if any word enter on search box then store that word on state and going to /search route
     const filteredItems = songs.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase())
     );
-    // console.log(filteredItems);
     setSearchedItems(filteredItems);
     navigate("/search");
   }, [search]);
 
+  //if select any mood the store that mood on state and going to /filter-songs route
   const handleMoodChange = (event) => {
     const newMood = event.target.value;
     setSelectedMood(newMood);
     navigate("/filter-songs");
   };
 
+  //if click on logo then going to main page
   const handleNavLogo = () => {
     navigate("/");
   };
 
+  //if clicked on Log In the going to /log-in route
   const handleLogIn = () => {
     navigate("/log-in");
   };
 
+  //if clicked on Sign Up the going to /sign-up route
   const handleSignUp = () => {
     navigate("/sign-up");
   };
 
+  //if clicked on Log Out then delete all data from local storage and going to main page
   const handleLogOut = () => {
     localStorage.clear();
     setIsLogIn(false);
@@ -129,12 +130,19 @@ function NavBar() {
     });
   };
 
+  //for handle any dead links
   const handleClick = () => {
     navigate("/under-construction");
   };
 
+  // navBar for mobile or tab
   const handleMenuOpen = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  //showing search box for mobile
+  const handleShowSearch = () => {
+    setShowSearch(!showSearch);
   };
 
   return (
@@ -164,8 +172,29 @@ function NavBar() {
             Go Pro
           </div>
         </div>
+        <div className="show-mobile">
+          <div onClick={handleShowSearch} className="search-icon show-mobile">
+            {" "}
+            <GoSearch />
+          </div>
 
-        <div className="searchBox">
+          <div
+            className={`${
+              showSearch ? " show-mobile search-for-mobile" : "mobile"
+            }`}
+          >
+            <input
+              type="text"
+              id="searchInput"
+              value={search}
+              ref={searchInputRef}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search"
+            />
+          </div>
+        </div>
+
+        <div className="searchBox mobile">
           <div className="search-icon">
             {" "}
             <GoSearch />
@@ -240,6 +269,7 @@ function NavBar() {
         </div>
         <ToastContainer />
       </div>
+      {/* This is for tab and mobile  */}
       <div className="tab">
         <div className={`${menuOpen ? " menu-open-container" : "no-tab"}`}>
           <div

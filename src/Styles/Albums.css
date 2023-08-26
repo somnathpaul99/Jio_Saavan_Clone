@@ -81,3 +81,25 @@
   font-family: "Roboto", sans-serif;
   font-size: 14px;
 }
+
+@media screen and (max-width: 900px) {
+  .album-container {
+    display: flex;
+    flex-direction: column-reverse;
+    min-width: 100vw;
+  }
+  .right-side-album {
+    width: unset;
+  }
+  .album-card {
+    width: 80%;
+    margin: auto;
+  }
+  .album-img {
+    height: 250px;
+  }
+  .left-side-album {
+    width: unset;
+    margin-top: unset;
+  }
+}

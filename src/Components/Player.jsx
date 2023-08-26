@@ -11,8 +11,10 @@ import { AllSongAlbumContext } from "../App";
 import CurrentPlayingSong from "./CurrentPlayingSong";
 
 function Player() {
+  //Getting all satate and function from App file
   const { currentSong, isPlaying, setIsPlaying, duration, setDuration } =
     useContext(AllSongAlbumContext);
+
   const [isOpenInFull, setIsOpenInFull] = useState(false);
   const [isVolume, setIsVolume] = useState(false);
   const [volume, setVolume] = useState(30);
@@ -20,8 +22,9 @@ function Player() {
 
   const audioPlayer = useRef();
 
+  //for duration and volume of music
   useEffect(() => {
-    if (audioPlayer) {
+    if (audioPlayer.current) {
       audioPlayer.current.volume = volume / 100;
     }
     if (isPlaying) {
@@ -35,19 +38,22 @@ function Player() {
     }
   }, [volume, isPlaying]);
 
+  //for play and pause music
   const changePlayPause = () => {
-    if (isPlaying) {
+    if (!isPlaying) {
       audioPlayer.current.play();
     } else {
       audioPlayer.current.pause();
     }
   };
 
+  //when clicked the button then handle play and pause
   const handlePlay = () => {
     setIsPlaying(!isPlaying);
     changePlayPause();
   };
 
+  //for formation the time of music
   function formatTime(time) {
     if (time && !isNaN(time)) {
       const minutes =
@@ -64,12 +70,15 @@ function Player() {
     return "00:00";
   }
 
+  //for handle next and prev song
   const halhleChangeTrack = (type) => {};
 
+  //for showing volume scale
   const handleVolume = () => {
     setIsVolume(!isVolume);
   };
 
+  //for showing song on full screen
   const handleOpenInFull = () => {
     setIsOpenInFull(!isOpenInFull);
   };
@@ -91,7 +100,7 @@ function Player() {
         </div>
       )}
 
-      <div className="player">
+      <div className="player for-tab-conatiners">
         <div className="progressBarContainer">
           <input
             type="range"
@@ -101,13 +110,13 @@ function Player() {
             onChange={(e) => setCurrentTime(e.target.value)}
           />
         </div>
-        <div className="player-icons-parent">
-          <div className="player-img">
+        <div className="player-icons-parent for-tab-conatiner">
+          <div className="player-img first">
             {currentSong && Object.keys(currentSong).length > 0 && (
               <PlayingMusic />
             )}
           </div>
-          <div className="player-icons">
+          <div className="player-icons second ">
             <div
               className="player-icon"
               onClick={() => halhleChangeTrack("prev")}
@@ -115,7 +124,7 @@ function Player() {
               <IoPlaySkipBack />
             </div>
             <div className="player-icon" onClick={handlePlay}>
-              {isPlaying ? <IoPlay /> : <HiPause />}
+              {isPlaying ? <HiPause /> : <IoPlay />}
             </div>
             <div
               className="player-icon"
@@ -124,12 +133,12 @@ function Player() {
               <IoPlaySkipForward />
             </div>
           </div>
-          <div className="player-icons">
-            <div className="duration">
-              {formatTime(currentTime)}
-              {" / "}
-              {formatTime(duration)}
-            </div>
+          <div className="duration forth">
+            {formatTime(currentTime)}
+            {" / "}
+            {formatTime(duration)}
+          </div>
+          <div className="player-icons third">
             <div className="player-icon volume">
               <input
                 className={isVolume ? "volume-control" : "volume-control-none"}
