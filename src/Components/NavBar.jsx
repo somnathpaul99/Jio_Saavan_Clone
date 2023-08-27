@@ -100,6 +100,7 @@ function NavBar() {
   const handleMoodChange = (event) => {
     const newMood = event.target.value;
     setSelectedMood(newMood);
+    localStorage.setItem("mood", newMood);
     navigate("/filter-songs");
   };
 

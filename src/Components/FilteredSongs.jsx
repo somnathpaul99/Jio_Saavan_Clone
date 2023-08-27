@@ -42,52 +42,67 @@ function FilteredSongs() {
   //getting state and function from App file
   const { setCurrentSong, selectedMood } = useContext(AllSongAlbumContext);
   const [filteredSongs, setFilteredSongs] = useState([]);
+  const [mood, setMood] = useState(localStorage.getItem("mood"));
+  const [loading, setLoading] = useState(true);
 
   //fetching data which is selected in navBar by mood option
-  const fetchSongsByMood = () => {
-    if (selectedMood) {
-      fetch(
-        `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${selectedMood}"}`,
-        {
-          headers: {
-            projectId: projectId,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("filteredData", data);
-          setFilteredSongs(data.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching songs:", error);
-        });
-    }
-  };
-
   useEffect(() => {
-    fetchSongsByMood();
-  }, [selectedMood]);
+    setLoading(true);
+
+    fetch(
+      `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${
+        selectedMood || mood
+      }"}`,
+      {
+        headers: {
+          projectId: projectId,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("filteredData", data);
+        setFilteredSongs(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching songs:", error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false after API call completes
+      });
+  }, [selectedMood, mood, projectId]);
+
+  //showing Loading until getting data
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
   //creating this generateCarouselForSongs for showing card by choice like 10 to 20 card from Songs array
-  const generateCarouselForSongs = (startIndex, endIndex) => (
-    <Carousel responsive={responsive}>
-      {filteredSongs.slice(startIndex, endIndex).map((song) => (
-        <Card
-          onClick={() => {
-            setCurrentSong(song);
-          }}
-          key={song._id}
-          title={song.title}
-          artist={
-            (song.artist[0]?.name ? song.artist[0]?.name : "") +
-            (song.artist[1]?.name ? ", " + song.artist[1]?.name : "")
-          }
-          thumbnail={song.thumbnail}
-        />
-      ))}
-    </Carousel>
-  );
+  const generateCarouselForSongs = (startIndex, endIndex) => {
+    if (!filteredSongs || filteredSongs.length === 0) {
+      return null;
+    }
+
+    return (
+      <Carousel responsive={responsive}>
+        {filteredSongs.slice(startIndex, endIndex).map((song) => (
+          <Card
+            onClick={() => {
+              setCurrentSong(song);
+              localStorage.setItem("currentSong", song);
+            }}
+            key={song?._id}
+            title={song?.title}
+            artist={
+              (song?.artist[0]?.name ? song?.artist[0]?.name : "") +
+              (song?.artist[1]?.name ? ", " + song?.artist[1]?.name : "")
+            }
+            thumbnail={song?.thumbnail}
+          />
+        ))}
+      </Carousel>
+    );
+  };
   return (
     <div className="filter-container">
       <div>

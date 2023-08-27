@@ -1,6 +1,6 @@
 import "../Styles/CurrentPlayingSong.css";
 
-//this component will render when click on for full  from Player
+//this component will render when click on for full screen from Player
 function CurrentPlayingSong({ isPlaying, currentSong, setIsPlaying }) {
   //if clicked on play button then set value on true
   const handlePlaySong = () => {
@@ -19,12 +19,12 @@ function CurrentPlayingSong({ isPlaying, currentSong, setIsPlaying }) {
         <div className="upper-details">
           <div className="left-side-current">
             {" "}
-            <img className="current-img" src={currentSong.thumbnail} alt="" />
+            <img className="current-img" src={currentSong?.thumbnail} alt="" />
           </div>
           <div className="right-side-current">
-            <div className="current-heading">{currentSong.title}</div>
+            <div className="current-heading">{currentSong?.title}</div>
             <div className="rel-date">
-              Released on {currentSong.dateOfRelease.slice(0, 10)}
+              Released on {currentSong?.dateOfRelease?.slice(0, 10)}
             </div>
             <button onClick={handlePlaySong} className="play-btn">
               Play
@@ -36,10 +36,10 @@ function CurrentPlayingSong({ isPlaying, currentSong, setIsPlaying }) {
           <div className="singers">
             {currentSong &&
               Object.keys(currentSong).length > 0 &&
-              currentSong.artist &&
-              currentSong.artist.length > 0 &&
-              currentSong.artist.map((singer, index) => (
-                <div key={index}>{singer.name}</div>
+              currentSong?.artist &&
+              currentSong?.artist.length > 0 &&
+              currentSong?.artist?.map((singer, index) => (
+                <div key={index}>{singer?.name}</div>
               ))}
           </div>
         </div>

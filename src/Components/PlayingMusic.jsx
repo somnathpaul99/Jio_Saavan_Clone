@@ -16,16 +16,18 @@ function PlayingMusic() {
         <div>
           <img
             className="img-playing-song"
-            src={currentSong.thumbnail}
+            src={currentSong?.thumbnail}
             alt="player image"
           />
         </div>
         <div>
-          <div className="playing-title">{currentSong.title}</div>
+          <div className="playing-title">{currentSong?.title}</div>
           <div className="playing-artist">
-            {(currentSong.artist[0]?.name ? currentSong.artist[0]?.name : "") +
-              (currentSong.artist[1]?.name
-                ? ", " + currentSong.artist[1]?.name
+            {(currentSong?.artist[0]?.name
+              ? currentSong?.artist[0]?.name
+              : "") +
+              (currentSong?.artist[1]?.name
+                ? ", " + currentSong?.artist[1]?.name
                 : "")}
           </div>
         </div>

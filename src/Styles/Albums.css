@@ -82,6 +82,15 @@
   font-size: 14px;
 }
 
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
+  height: 100vh;
+}
+
 @media screen and (max-width: 900px) {
   .album-container {
     display: flex;
@@ -94,6 +103,7 @@
   .album-card {
     width: 80%;
     margin: auto;
+    margin-bottom: 10px;
   }
   .album-img {
     height: 250px;

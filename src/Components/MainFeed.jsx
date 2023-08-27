@@ -65,18 +65,19 @@ function MainFeed() {
       autoPlaySpeed={2000}
       slidesToSlide={1}
     >
-      {songs.slice(startIndex, endIndex).map((song) => (
+      {songs?.slice(startIndex, endIndex).map((song) => (
         <Card
           onClick={() => {
             setCurrentSong(song);
+            localStorage.setItem("currentSong", song);
           }}
-          key={song._id}
-          title={song.title}
+          key={song?._id}
+          title={song?.title}
           artist={
-            (song.artist[0]?.name ? song.artist[0]?.name : "") +
-            (song.artist[1]?.name ? ", " + song.artist[1]?.name : "")
+            (song?.artist[0]?.name ? song?.artist[0]?.name : "") +
+            (song?.artist[1]?.name ? ", " + song?.artist[1]?.name : "")
           }
-          thumbnail={song.thumbnail}
+          thumbnail={song?.thumbnail}
         />
       ))}
     </Carousel>
@@ -86,18 +87,20 @@ function MainFeed() {
   const generateCarouselForAlbums = (startIndex, endIndex) => {
     return (
       <Carousel responsive={responsive}>
-        {albums.slice(startIndex, endIndex).map((album) => (
+        {albums?.slice(startIndex, endIndex).map((album) => (
           <Card
             onClick={() => {
-              handleAlbumID(album._id), setAlbumsId(album._id);
+              handleAlbumID(album?._id),
+                setAlbumsId(album?._id),
+                localStorage.setItem("albumId", album._id);
             }}
-            key={album._id}
-            title={album.title}
+            key={album?._id}
+            title={album?.title}
             artist={
-              (album.artists[0]?.name ? album.artists[0]?.name : "") +
-              (album.artists[1]?.name ? ", " + album.artists[1]?.name : "")
+              (album?.artists[0]?.name ? album?.artists[0]?.name : "") +
+              (album?.artists[1]?.name ? ", " + album?.artists[1]?.name : "")
             }
-            thumbnail={album.image}
+            thumbnail={album?.image}
           />
         ))}
       </Carousel>

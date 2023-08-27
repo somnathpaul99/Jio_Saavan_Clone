@@ -55,19 +55,19 @@ function SearchItem() {
   //creating this generateCarouselForSongs for showing card by choice like 10 to 20 card from Songs array
   const generateCarouselForSongs = (startIndex, endIndex) => (
     <Carousel responsive={responsive}>
-      {searchItem.slice(startIndex, endIndex).map((song) => (
+      {searchItem?.slice(startIndex, endIndex).map((song) => (
         <Card
           onClick={() => {
             setCurrentSong(song);
-            setDuration("0:0");
+            localStorage.setItem("currentSong", song);
           }}
-          key={song._id}
-          title={song.title}
+          key={song?._id}
+          title={song?.title}
           artist={
-            (song.artist[0]?.name ? song.artist[0]?.name : "") +
-            (song.artist[1]?.name ? ", " + song.artist[1]?.name : "")
+            (song?.artist[0]?.name ? song?.artist[0]?.name : "") +
+            (song?.artist[1]?.name ? ", " + song?.artist[1]?.name : "")
           }
-          thumbnail={song.thumbnail}
+          thumbnail={song?.thumbnail}
         />
       ))}
     </Carousel>
