@@ -59,7 +59,6 @@ function SearchItem() {
         <Card
           onClick={() => {
             setCurrentSong(song);
-            localStorage.setItem("currentSong", song);
           }}
           key={song?._id}
           title={song?.title}

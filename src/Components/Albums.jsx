@@ -93,7 +93,6 @@ function Albums() {
               key={idx}
               onClick={() => {
                 setCurrentSong(song);
-                localStorage.setItem("currentSong", song);
               }}
               song={song}
             />
