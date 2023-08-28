@@ -42,17 +42,20 @@ function FilteredSongs() {
   //getting state and function from App file
   const { setCurrentSong, selectedMood } = useContext(AllSongAlbumContext);
   const [filteredSongs, setFilteredSongs] = useState([]);
-  const [mood, setMood] = useState(localStorage.getItem("mood"));
+  const [mood, setMood] = useState("");
   const [loading, setLoading] = useState(true);
 
   //fetching data which is selected in navBar by mood option
   useEffect(() => {
     setLoading(true);
+    const mood = localStorage.getItem("mood");
+
+    if (mood) {
+      setMood(mood);
+    }
 
     fetch(
-      `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${
-        selectedMood || mood
-      }"}`,
+      `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${mood}"}`,
       {
         headers: {
           projectId: projectId,
@@ -70,7 +73,7 @@ function FilteredSongs() {
       .finally(() => {
         setLoading(false); // Set loading to false after API call completes
       });
-  }, [selectedMood, mood, projectId]);
+  }, [selectedMood]);
 
   //showing Loading until getting data
   if (loading) {

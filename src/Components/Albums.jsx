@@ -32,16 +32,11 @@ function Albums() {
       setNewAlbumId(albumId);
     }
 
-    fetch(
-      `https://academics.newtonschool.co/api/v1/music/album/${
-        albumId || newAlbumId
-      }`,
-      {
-        headers: {
-          projectId: projectId,
-        },
-      }
-    )
+    fetch(`https://academics.newtonschool.co/api/v1/music/album/${albumId}`, {
+      headers: {
+        projectId: projectId,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log("API Response Data:", data);
@@ -53,7 +48,7 @@ function Albums() {
       .finally(() => {
         setLoading(false); // Set loading to false after API call completes
       });
-  }, []);
+  }, [albumsId]);
 
   //showing Loading until getting data
   if (loading) {
