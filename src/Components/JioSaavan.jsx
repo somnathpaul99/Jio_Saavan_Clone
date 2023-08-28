@@ -1,3 +1,4 @@
+import { memo } from "react";
 import React from "react";
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
@@ -5,22 +6,27 @@ import MainFeed from "./MainFeed";
 import Player from "./Player";
 import "../Styles/JioSaavan.css";
 
+const OptimizedNavBar = memo(NavBar);
+const OptimizedSideBar = memo(SideBar);
+const OptimizedMainFeed = memo(MainFeed);
+const OptimizedPlayer = memo(Player);
+
 function JioSaavan() {
   return (
     <>
       <div>
-        <NavBar />
+        <OptimizedNavBar />
       </div>
       <div className="sideBar-feed">
         <div className="side-bar">
-          <SideBar />
+          <OptimizedSideBar />
         </div>
         <div className="feed">
-          <MainFeed />
+          <OptimizedMainFeed />
         </div>
       </div>
       <div>
-        <Player />
+        <OptimizedPlayer />
       </div>
     </>
   );

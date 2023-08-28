@@ -48,6 +48,7 @@ const scrollToSection = (ref) => {
 };
 
 function NavBar() {
+  console.log("Render from Nav bar");
   //Getting all satate and function and ref from App file
   const {
     songs,

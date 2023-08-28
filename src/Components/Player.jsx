@@ -5,10 +5,13 @@ import { IoPlaySkipForward } from "react-icons/io5";
 import { AiTwotoneSound } from "react-icons/ai";
 import { MdOutlineOpenInFull } from "react-icons/md";
 import { HiPause } from "react-icons/hi";
-import { useState, useContext, useRef, useEffect } from "react";
+import { useState, useContext, useRef, useEffect, memo } from "react";
 import PlayingMusic from "./PlayingMusic";
 import { AllSongAlbumContext } from "../App";
 import CurrentPlayingSong from "./CurrentPlayingSong";
+
+const OptimizedCurrentPlayingSong = memo(CurrentPlayingSong);
+const OptimizedPlayingMusic = memo(PlayingMusic);
 
 function Player() {
   //Getting all satate and function from App file
@@ -92,7 +95,7 @@ function Player() {
             isOpenInFull ? "big-screen-playing" : "big-screen-playing-down"
           }
         >
-          <CurrentPlayingSong
+          <OptimizedCurrentPlayingSong
             isPlaying={isPlaying}
             currentSong={currentSong}
             setIsPlaying={setIsPlaying}
@@ -106,14 +109,14 @@ function Player() {
             type="range"
             className="progressBar"
             value={currentTime}
-            max={duration}
+            max={duration || 0}
             onChange={(e) => setCurrentTime(e.target.value)}
           />
         </div>
         <div className="player-icons-parent for-tab-conatiner">
           <div className="player-img first">
             {currentSong && Object.keys(currentSong).length > 0 && (
-              <PlayingMusic />
+              <OptimizedPlayingMusic />
             )}
           </div>
           <div className="player-icons second ">

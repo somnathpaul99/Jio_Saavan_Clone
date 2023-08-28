@@ -1,11 +1,14 @@
 import NavBar from "./NavBar";
 import Player from "./Player";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { AllSongAlbumContext } from "../App";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../Styles/SearchItem.css";
+
+const OptimizedNavBar = memo(NavBar);
+const OptimizedPlayer = memo(Player);
 
 //This is from multi-carousel library
 const responsive = {
@@ -75,7 +78,7 @@ function SearchItem() {
   return (
     <>
       <div>
-        <NavBar />
+        <OptimizedNavBar />
       </div>
       <div className="search-card-container">
         <div className="new-release search-heading">Search Items</div>
@@ -91,7 +94,7 @@ function SearchItem() {
         <div className="search-card"> {generateCarouselForSongs(90, 100)}</div>
       </div>
       <div>
-        <Player />
+        <OptimizedPlayer />
       </div>
     </>
   );

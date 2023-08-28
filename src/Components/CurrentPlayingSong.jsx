@@ -2,6 +2,8 @@ import "../Styles/CurrentPlayingSong.css";
 
 //this component will render when click on for full screen from Player
 function CurrentPlayingSong({ isPlaying, currentSong, setIsPlaying }) {
+  console.log("currentPlaying render");
+
   //if clicked on play button then set value on true
   const handlePlaySong = () => {
     if (isPlaying === false) {

@@ -1,10 +1,13 @@
 import NavBar from "./NavBar";
 import Player from "./Player";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, memo } from "react";
 import { AllSongAlbumContext } from "../App";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../Styles/FilteredSongs.css";
+
+const OptimizedNavBar = memo(NavBar);
+const OptimizedPlayer = memo(Player);
 
 //from multi-carousel library
 const responsive = {
@@ -42,17 +45,12 @@ function FilteredSongs() {
   //getting state and function from App file
   const { setCurrentSong, selectedMood } = useContext(AllSongAlbumContext);
   const [filteredSongs, setFilteredSongs] = useState([]);
-  const [mood, setMood] = useState("");
   const [loading, setLoading] = useState(true);
 
   //fetching data which is selected in navBar by mood option
   useEffect(() => {
     setLoading(true);
     const mood = localStorage.getItem("mood");
-
-    if (mood) {
-      setMood(mood);
-    }
 
     fetch(
       `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${mood}"}`,
@@ -108,7 +106,7 @@ function FilteredSongs() {
   return (
     <div className="filter-container">
       <div>
-        <NavBar />
+        <OptimizedNavBar />
       </div>
       <div>
         <div className="mod ">Music You Choose</div>
@@ -123,7 +121,7 @@ function FilteredSongs() {
         </div>
       </div>
       <div>
-        <Player />
+        <OptimizedPlayer />
       </div>
     </div>
   );

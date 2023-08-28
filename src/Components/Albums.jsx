@@ -1,8 +1,11 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, memo } from "react";
 import { AllSongAlbumContext } from "../App";
 import NavBar from "./NavBar";
 import Player from "./Player";
 import "../Styles/Albums.css";
+
+const OptimizedNavBar = memo(NavBar);
+const OptimizedPlayer = memo(Player);
 
 const AlbumCard = ({ song, onClick }) => {
   return (
@@ -20,17 +23,16 @@ function Albums() {
   const { albumsId, setCurrentSong } = useContext(AllSongAlbumContext);
   const [albumData, setAlbumData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [newAlbumId, setNewAlbumId] = useState("");
+  console.log("albumsId", albumsId);
+  console.log("albumData", albumData);
 
   //fetching all data of albums by ID
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching new data
 
     const albumId = localStorage.getItem("albumId");
-
-    if (albumId) {
-      setNewAlbumId(albumId);
-    }
+    console.log("fetchId", albumId);
+    console.log("fetchIDcontext", albumsId);
 
     fetch(`https://academics.newtonschool.co/api/v1/music/album/${albumId}`, {
       headers: {
@@ -62,7 +64,7 @@ function Albums() {
   return (
     <>
       <div className="navBar-album">
-        <NavBar />
+        <OptimizedNavBar />
       </div>
       <div className="album-container">
         <div className="left-side-album">
@@ -96,7 +98,7 @@ function Albums() {
       </div>
 
       <div className="player-album">
-        <Player />
+        <OptimizedPlayer />
       </div>
     </>
   );
