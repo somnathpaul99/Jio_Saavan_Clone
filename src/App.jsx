@@ -1,6 +1,6 @@
 import "./App.css";
 import JioSaavan from "./Components/JioSaavan";
-import { createContext, useState, useEffect, useRef } from "react";
+import { createContext, useState, useEffect, useRef, memo } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Albums from "./Components/Albums";
 import Login from "./Components/Login";
@@ -9,6 +9,13 @@ import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
 import UnderConstruction from "./Components/UnderConstruction";
 import Error from "./Components/Error";
+
+const OptimizedAlbums = memo(Albums);
+const OptimizedJioSaavan = memo(JioSaavan);
+const OptimizedSearchItem = memo(SearchItem);
+const OptimizedFilteredSongs = memo(FilteredSongs);
+const OptimizedLogIn = memo(Login);
+const OptimizedSignUp = memo(SignUp);
 
 export const AllSongAlbumContext = createContext();
 
@@ -140,12 +147,12 @@ function App() {
       >
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<JioSaavan />} />
-            <Route path="/albums" element={<Albums />} />
-            <Route path="/filter-songs" element={<FilteredSongs />} />
-            <Route path="/log-in" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/search" element={<SearchItem />} />
+            <Route path="/" element={<OptimizedJioSaavan />} />
+            <Route path="/albums" element={<OptimizedAlbums />} />
+            <Route path="/filter-songs" element={<OptimizedFilteredSongs />} />
+            <Route path="/log-in" element={<OptimizedLogIn />} />
+            <Route path="/sign-up" element={<OptimizedSignUp />} />
+            <Route path="/search" element={<OptimizedSearchItem />} />
             <Route path="/under-construction" element={<UnderConstruction />} />
             <Route path="*" element={<Error />} />
           </Routes>
