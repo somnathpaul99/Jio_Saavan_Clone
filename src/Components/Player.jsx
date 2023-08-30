@@ -15,8 +15,15 @@ const OptimizedPlayingMusic = memo(PlayingMusic);
 
 function Player() {
   //Getting all satate and function from App file
-  const { currentSong, isPlaying, setIsPlaying, duration, setDuration } =
-    useContext(AllSongAlbumContext);
+  const {
+    currentSong,
+    isPlaying,
+    setIsPlaying,
+    duration,
+    setDuration,
+    setCurrentSong,
+    songs,
+  } = useContext(AllSongAlbumContext);
 
   const [isOpenInFull, setIsOpenInFull] = useState(false);
   const [isVolume, setIsVolume] = useState(false);
@@ -73,8 +80,11 @@ function Player() {
     return "00:00";
   }
 
-  //for handle next and prev song
-  const halhleChangeTrack = (type) => {};
+  //for handle next song
+  const handleChangeTrackForward = () => {};
+
+  //for handle prev song
+  const handleChangeTrackBackward = () => {};
 
   //for showing volume scale
   const handleVolume = () => {
@@ -120,19 +130,13 @@ function Player() {
             )}
           </div>
           <div className="player-icons second ">
-            <div
-              className="player-icon"
-              onClick={() => halhleChangeTrack("prev")}
-            >
+            <div className="player-icon" onClick={handleChangeTrackBackward}>
               <IoPlaySkipBack />
             </div>
             <div className="player-icon" onClick={handlePlay}>
               {isPlaying ? <HiPause /> : <IoPlay />}
             </div>
-            <div
-              className="player-icon"
-              onClick={() => halhleChangeTrack("next")}
-            >
+            <div className="player-icon" onClick={handleChangeTrackForward}>
               <IoPlaySkipForward />
             </div>
           </div>

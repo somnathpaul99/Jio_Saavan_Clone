@@ -62,7 +62,7 @@ function FilteredSongs() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("filteredData", data);
+        // console.log("filteredData", data);
         setFilteredSongs(data.data);
       })
       .catch((error) => {

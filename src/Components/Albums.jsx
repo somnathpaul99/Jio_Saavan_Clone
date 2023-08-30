@@ -1,9 +1,8 @@
-import { useEffect, useContext, useState, memo, useMemo } from "react";
+import { useEffect, useContext, useState, memo } from "react";
 import { AllSongAlbumContext } from "../App";
 import NavBar from "./NavBar";
 import Player from "./Player";
 import "../Styles/Albums.css";
-import { json } from "react-router-dom";
 
 const OptimizedNavBar = memo(NavBar);
 const OptimizedPlayer = memo(Player);
@@ -24,65 +23,41 @@ function Albums() {
   const { albumsId, setCurrentSong } = useContext(AllSongAlbumContext);
   const [albumData, setAlbumData] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log("albumsId", albumsId);
-  console.log("albumData", albumData);
 
   //fetching all data of albums by ID
   useEffect(() => {
     setLoading(true); // Set loading to true before fetching new data
 
-    // const albumId = localStorage.getItem("albumId");
-    // console.log("fetchId", albumId);
-    if (albumsId) {
-      console.log("fetchIDcontext", albumsId);
+    const albumId = localStorage.getItem("albumId");
 
-      fetch(
-        `https://academics.newtonschool.co/api/v1/music/album/${albumsId}`,
-        {
-          headers: {
-            projectId: projectId,
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("API Response Data:", data);
-          setAlbumData(data.data || []);
-          localStorage.setItem("albumsDataStore", JSON.stringify(data.data));
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        })
-        .finally(() => {
-          setLoading(false); // Set loading to false after API call completes
-        });
-    }
+    fetch(`https://academics.newtonschool.co/api/v1/music/album/${albumId}`, {
+      headers: {
+        projectId: projectId,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("API Response Data:", data);
+        setAlbumData(data.data || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false after API call completes
+      });
   }, [albumsId]);
 
-  useEffect(() => {
-    const albumData = localStorage.getItem("albumsDataStore");
-
-    if (albumData) {
-      console.log("From Local Storage", JSON.parse(albumData));
-      setAlbumData(JSON.parse(albumData));
-    }
-  }, []);
-
-  const memoizedAlbumData = useMemo(() => albumData, [albumData]);
-
   //showing Loading until getting data
-  if (!albumData) {
+  if (loading) {
     return <div className="loading">Loading...</div>;
   }
 
-  // //if no data available on albums then showing this
-  // if (!albumData.songs || !Array.isArray(albumData.songs)) {
-  //   return <div>No songs available.</div>;
-  // }
-
-  if (!memoizedAlbumData?.songs || !Array.isArray(memoizedAlbumData?.songs)) {
-    return <div>No songs available.</div>;
+  //if no data available on albums then showing this
+  if (!albumData.songs || !Array.isArray(albumData.songs)) {
+    return <div className="loading">No songs available.</div>;
   }
+
   return (
     <>
       <div className="navBar-album">
