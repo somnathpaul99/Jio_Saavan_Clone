@@ -25,8 +25,6 @@ function Player() {
     songs,
   } = useContext(AllSongAlbumContext);
 
-  console.log("song", currentSong);
-
   const [isOpenInFull, setIsOpenInFull] = useState(false);
   const [isVolume, setIsVolume] = useState(false);
   const [volume, setVolume] = useState(30);
