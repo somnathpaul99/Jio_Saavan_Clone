@@ -25,10 +25,13 @@ function Player() {
     songs,
   } = useContext(AllSongAlbumContext);
 
+  console.log("song", currentSong);
+
   const [isOpenInFull, setIsOpenInFull] = useState(false);
   const [isVolume, setIsVolume] = useState(false);
   const [volume, setVolume] = useState(30);
   const [currentTime, setCurrentTime] = useState(0);
+  const [index, setIndex] = useState(0);
 
   const audioPlayer = useRef();
 
@@ -81,10 +84,28 @@ function Player() {
   }
 
   //for handle next song
-  const handleChangeTrackForward = () => {};
+  const handleChangeTrackForward = () => {
+    // Calculate the index of the next song
+    const nextSongIndex = (index + 1) % songs.length;
+
+    // Set the index of the next song
+    setIndex(nextSongIndex);
+
+    // Set the current song using the next index
+    setCurrentSong(songs[nextSongIndex]);
+  };
 
   //for handle prev song
-  const handleChangeTrackBackward = () => {};
+  const handleChangeTrackBackward = () => {
+    // Calculate the index of the previous song
+    const prevSongIndex = (index - 1 + songs.length) % songs.length;
+
+    // Set the index of the previous song
+    setIndex(prevSongIndex);
+
+    // Set the current song using the previous index
+    setCurrentSong(songs[prevSongIndex]);
+  };
 
   //for showing volume scale
   const handleVolume = () => {
