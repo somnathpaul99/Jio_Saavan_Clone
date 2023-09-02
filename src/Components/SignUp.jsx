@@ -73,7 +73,7 @@ function SignUp() {
 
         if (response.ok) {
           toast.success("Signup successful!.");
-          navigate("log-in");
+          navigate("/log-in");
           console.log("Response", response);
         } else {
           toast.error("User Already Exists");
