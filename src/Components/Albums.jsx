@@ -3,6 +3,7 @@ import { AllSongAlbumContext } from "../App";
 import NavBar from "./NavBar";
 import Player from "./Player";
 import "../Styles/Albums.css";
+import { Vortex } from "react-loader-spinner";
 
 const OptimizedNavBar = memo(NavBar);
 const OptimizedPlayer = memo(Player);
@@ -50,7 +51,20 @@ function Albums() {
 
   //showing Loading until getting data
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading">
+        {" "}
+        <Vortex
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="vortex-loading"
+          wrapperStyle={{}}
+          wrapperClass="vortex-wrapper"
+          colors={["red", "green", "blue", "yellow", "orange", "purple"]}
+        />
+      </div>
+    );
   }
 
   //if no data available on albums then showing this

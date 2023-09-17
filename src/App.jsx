@@ -9,6 +9,7 @@ import SearchItem from "./Components/SearchItem";
 import FilteredSongs from "./Components/FilteredSongs";
 import UnderConstruction from "./Components/UnderConstruction";
 import Error from "./Components/Error";
+import { Vortex } from "react-loader-spinner";
 
 const OptimizedAlbums = memo(Albums);
 const OptimizedJioSaavan = memo(JioSaavan);
@@ -38,6 +39,7 @@ function App() {
   const [searchItem, setSearchedItems] = useState([]);
   const [isLogIn, setIsLogIn] = useState(false);
   const [userName, setUserName] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const newReleasesRef = useRef(null);
   const topChartsRef = useRef(null);
@@ -90,6 +92,7 @@ function App() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+    setLoading(false);
   };
 
   //Fetch data for Albums
@@ -110,7 +113,26 @@ function App() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+    setLoading(false);
   };
+
+  //showing Loading until getting data
+  if (loading) {
+    return (
+      <div className="loading">
+        <Vortex
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="vortex-loading"
+          wrapperStyle={{}}
+          wrapperClass="vortex-wrapper"
+          colors={["red", "green", "blue", "yellow", "orange", "purple"]}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <AllSongAlbumContext.Provider
