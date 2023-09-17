@@ -96,10 +96,20 @@ function Login() {
     }
   };
 
+  //if click on logo then going to main page
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="login-conatiner">
       <div className="login-left">
-        <img className="login-logo" src="./logo.png" alt="" />
+        <img
+          onClick={handleLogoClick}
+          className="login-logo"
+          src="./logo.png"
+          alt=""
+        />
         <img className="login-img" src="./Badshah.png" alt="" />
         <h2>All Your Music.</h2>
         <h3>Anytime, anywhere.</h3>

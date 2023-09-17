@@ -5,6 +5,8 @@ import SideBar from "./SideBar";
 import MainFeed from "./MainFeed";
 import Player from "./Player";
 import "../Styles/JioSaavan.css";
+import { useEffect, useContext } from "react";
+import { AllSongAlbumContext } from "../App";
 
 const OptimizedNavBar = memo(NavBar);
 const OptimizedSideBar = memo(SideBar);
@@ -12,6 +14,11 @@ const OptimizedMainFeed = memo(MainFeed);
 const OptimizedPlayer = memo(Player);
 
 function JioSaavan() {
+  const { setSelectedMood } = useContext(AllSongAlbumContext);
+  useEffect(() => {
+    setSelectedMood("noValue");
+  }, []);
+
   return (
     <>
       <div>

@@ -20,8 +20,10 @@ const OptimizedSignUp = memo(SignUp);
 export const AllSongAlbumContext = createContext();
 
 function App() {
-  const apiUrl = "https://academics.newtonschool.co/api/v1/music/song";
-  const albumApiUrl = "https://academics.newtonschool.co/api/v1/music/album";
+  const apiUrl =
+    "https://academics.newtonschool.co/api/v1/music/song?limit=100";
+  const albumApiUrl =
+    "https://academics.newtonschool.co/api/v1/music/album?limit=100";
   const projectId = "dlzsedvtpspr";
 
   const [songs, setSongs] = useState([]);

@@ -5,6 +5,7 @@ import { AllSongAlbumContext } from "../App";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "../Styles/FilteredSongs.css";
+import { useNavigate } from "react-router-dom";
 
 const OptimizedNavBar = memo(NavBar);
 const OptimizedPlayer = memo(Player);
@@ -43,13 +44,19 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 function FilteredSongs() {
   const projectId = "dlzsedvtpspr";
   //getting state and function from App file
-  const { setCurrentSong, selectedMood } = useContext(AllSongAlbumContext);
+  const { setCurrentSong, selectedMood, setSelectedMood } =
+    useContext(AllSongAlbumContext);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   //fetching data which is selected in navBar by mood option
   useEffect(() => {
     setLoading(true);
+    if (selectedMood === "noValue") {
+      setSelectedMood(selectedMood);
+      navigate("/");
+    }
     const mood = localStorage.getItem("mood");
 
     fetch(

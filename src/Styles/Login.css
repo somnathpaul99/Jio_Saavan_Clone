@@ -43,6 +43,7 @@ h3 {
   position: absolute;
   top: 10px;
   left: 15px;
+  cursor: pointer;
 }
 
 .login-right-container {

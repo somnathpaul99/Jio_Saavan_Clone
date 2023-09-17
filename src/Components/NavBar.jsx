@@ -99,9 +99,12 @@ function NavBar() {
   //if select any mood the store that mood on state and going to /filter-songs route
   const handleMoodChange = (event) => {
     const newMood = event.target.value;
+    if (newMood !== "noValue") {
+      setSelectedMood(newMood);
+      localStorage.setItem("mood", newMood);
+      navigate("/filter-songs");
+    }
     setSelectedMood(newMood);
-    localStorage.setItem("mood", newMood);
-    navigate("/filter-songs");
   };
 
   //if click on logo then going to main page
@@ -237,7 +240,7 @@ function NavBar() {
               onChange={handleMoodChange}
               className="select-nav"
             >
-              <option value="" className="languages">
+              <option value="noValue" className="languages">
                 Select Mood
               </option>
               <option value="sad">Sad</option>
@@ -294,7 +297,7 @@ function NavBar() {
               onChange={handleMoodChange}
               className="select-nav"
             >
-              <option value="" className="languages">
+              <option value="noValue" className="languages">
                 Select Mood
               </option>
               <option value="sad">Sad</option>
