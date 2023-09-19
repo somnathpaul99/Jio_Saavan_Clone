@@ -60,6 +60,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .log-in-heading {
@@ -79,6 +80,26 @@ h3 {
   padding-left: 15px;
   font-size: 16px;
   font-family: "Roboto", sans-serif;
+}
+
+.show-password {
+  position: absolute;
+  right: 26px;
+  top: 136px;
+  font-family: "Roboto", sans-serif;
+  color: #00000092;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.show-password-log-in {
+  position: absolute;
+  right: 26px;
+  top: 79px;
+  font-family: "Roboto", sans-serif;
+  color: #00000092;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 p {

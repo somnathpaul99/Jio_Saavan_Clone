@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 function SignUp() {
   const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
   const userInputRef = useRef({
     name: "",
     email: "",
@@ -72,7 +73,9 @@ function SignUp() {
         });
 
         if (response.ok) {
-          toast.success("Signup successful!.");
+          setTimeout(() => {
+            toast.success("Signup successful!");
+          }, 1000);
           navigate("/log-in");
           console.log("Response", response);
         } else {
@@ -87,6 +90,11 @@ function SignUp() {
   //if click on logo then going to main page
   const handleLogoClick = () => {
     navigate("/");
+  };
+
+  //for showing password
+  const haldleShow = () => {
+    setShow(!show);
   };
 
   return (
@@ -125,11 +133,14 @@ function SignUp() {
 
               <input
                 className="input-login"
-                type="password"
+                type={show ? "text" : "password"}
                 name="password"
                 onChange={getdata}
                 placeholder="Set Password"
               />
+              <label className="show-password" onClick={haldleShow}>
+                {show ? "Hide" : "Show"}
+              </label>
 
               <button className="button-signIn" onClick={addData} type="submit">
                 Continue

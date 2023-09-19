@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 function Login() {
   const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
+
   //getting state and function from App file
   const { setIsLogIn, setUserName } = useContext(AllSongAlbumContext);
 
@@ -79,7 +81,9 @@ function Login() {
           console.log("data", data);
           console.log(JSON.stringify(data.token));
           localStorage.setItem("token", data.token);
-          toast.success("Successfully Logged In");
+          setTimeout(() => {
+            toast.success("Successfully Logged In");
+          }, 1000);
           localStorage.setItem("username", data.data.name);
           localStorage.setItem("email", data.data.email);
           setIsLogIn(true);
@@ -99,6 +103,11 @@ function Login() {
   //if click on logo then going to main page
   const handleLogoClick = () => {
     navigate("/");
+  };
+
+  //for showing password
+  const haldleShow = () => {
+    setShow(!show);
   };
 
   return (
@@ -129,11 +138,14 @@ function Login() {
 
               <input
                 className="input-login"
-                type="password"
+                type={show ? "text" : "password"}
                 name="password"
                 onChange={getdata}
-                placeholder="Enter Password"
+                placeholder="Set Password"
               />
+              <label className="show-password-log-in" onClick={haldleShow}>
+                {show ? "Hide" : "Show"}
+              </label>
 
               <button className="button-signIn" onClick={addData} type="submit">
                 Log In
