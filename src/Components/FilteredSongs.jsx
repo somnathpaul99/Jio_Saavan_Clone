@@ -45,7 +45,7 @@ const Card = ({ title, artist, thumbnail, onClick }) => {
 function FilteredSongs() {
   const projectId = "dlzsedvtpspr";
   //getting state and function from App file
-  const { setCurrentSong, selectedMood, setSelectedMood } =
+  const { setCurrentSong, selectedMood, setSelectedMood, setIsPlaying } =
     useContext(AllSongAlbumContext);
   const [filteredSongs, setFilteredSongs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,6 +59,7 @@ function FilteredSongs() {
       navigate("/");
     }
     const mood = localStorage.getItem("mood");
+    setSelectedMood(mood);
 
     fetch(
       `https://academics.newtonschool.co/api/v1/music/song?filter={"mood":"${mood}"}`,
@@ -111,6 +112,7 @@ function FilteredSongs() {
           <Card
             onClick={() => {
               setCurrentSong(song);
+              setIsPlaying(true);
             }}
             key={song?._id}
             title={song?.title}

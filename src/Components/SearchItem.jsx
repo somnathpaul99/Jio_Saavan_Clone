@@ -45,7 +45,7 @@ function SearchItem() {
   const navigate = useNavigate();
 
   //getting all state, function from App file
-  const { search, searchItem, setCurrentSong } =
+  const { search, searchItem, setCurrentSong, setIsPlaying } =
     useContext(AllSongAlbumContext);
 
   //if search box is empty then going to main page
@@ -62,6 +62,7 @@ function SearchItem() {
         <Card
           onClick={() => {
             setCurrentSong(song);
+            setIsPlaying(true);
           }}
           key={song?._id}
           title={song?.title}

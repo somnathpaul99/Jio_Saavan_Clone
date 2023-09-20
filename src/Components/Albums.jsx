@@ -21,7 +21,8 @@ function Albums() {
   const projectId = "dlzsedvtpspr";
 
   //Getting all satate and function from App file
-  const { albumsId, setCurrentSong } = useContext(AllSongAlbumContext);
+  const { albumsId, setCurrentSong, setIsPlaying } =
+    useContext(AllSongAlbumContext);
   const [albumData, setAlbumData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -101,6 +102,7 @@ function Albums() {
               key={idx}
               onClick={() => {
                 setCurrentSong(song);
+                setIsPlaying(true);
               }}
               song={song}
             />

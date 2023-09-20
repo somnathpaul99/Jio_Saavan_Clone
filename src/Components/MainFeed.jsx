@@ -49,6 +49,7 @@ function MainFeed() {
     topPlaylistsRef,
     podcastsRef,
     albumsRef,
+    setIsPlaying,
   } = useContext(AllSongAlbumContext);
 
   //when clicked on any album card then going to /albums route and showing all song and data
@@ -69,6 +70,7 @@ function MainFeed() {
         <Card
           onClick={() => {
             setCurrentSong(song);
+            setIsPlaying(true);
           }}
           key={song?._id}
           title={song?.title}

@@ -5,7 +5,14 @@ import { IoPlaySkipForward } from "react-icons/io5";
 import { AiTwotoneSound } from "react-icons/ai";
 import { MdOutlineOpenInFull } from "react-icons/md";
 import { HiPause } from "react-icons/hi";
-import { useState, useContext, useRef, useEffect, memo } from "react";
+import {
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  memo,
+  useCallback,
+} from "react";
 import PlayingMusic from "./PlayingMusic";
 import { AllSongAlbumContext } from "../App";
 import CurrentPlayingSong from "./CurrentPlayingSong";
@@ -33,35 +40,44 @@ function Player() {
 
   const audioPlayer = useRef();
 
-  //for duration and volume of music
+  // Memoize the callback functions for updating duration and currentTime
+  const updateDurationAndCurrentTime = useCallback(() => {
+    if (audioPlayer.current) {
+      const _duration = Math.floor(audioPlayer.current.duration);
+      const _currentTime = Math.floor(audioPlayer.current.currentTime);
+
+      setDuration(_duration);
+      setCurrentTime(_currentTime);
+    }
+  }, []);
+
   useEffect(() => {
     if (audioPlayer.current) {
       audioPlayer.current.volume = volume / 100;
     }
-    if (isPlaying) {
-      setInterval(() => {
-        const _duration = Math.floor(audioPlayer?.current?.duration);
-        const _currentTime = Math.floor(audioPlayer?.current?.currentTime);
 
-        setDuration(_duration);
-        setCurrentTime(_currentTime);
-      }, 100);
+    if (isPlaying) {
+      const intervalId = setInterval(updateDurationAndCurrentTime, 100);
+
+      // Clear the interval when the component unmounts or when isPlaying becomes false
+      return () => clearInterval(intervalId);
     }
-  }, [volume, isPlaying]);
+  }, [volume, isPlaying, updateDurationAndCurrentTime]);
 
   //for play and pause music
-  const changePlayPause = () => {
-    if (!isPlaying) {
+  useEffect(() => {
+    if (isPlaying) {
       audioPlayer.current.play();
     } else {
       audioPlayer.current.pause();
     }
-  };
+  }, [isPlaying, currentSong]);
 
   //when clicked the button then handle play and pause
   const handlePlay = () => {
-    setIsPlaying(!isPlaying);
-    changePlayPause();
+    if (Object.keys(currentSong).length > 0) {
+      setIsPlaying(!isPlaying);
+    }
   };
 
   //for formation the time of music
