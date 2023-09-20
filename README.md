@@ -9,7 +9,6 @@
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- [License](#license)
 
 ## Introduction
 
@@ -84,9 +83,3 @@ If you'd like to contribute to this project, please follow these guidelines:
 - Make your changes and commit them: git commit -m "Description of changes".
 - Push your changes to your fork: git push origin feature-name.
 - Create a pull request to the main repository's main branch.
-
-## License
-
-This project is licensed under the MIT License.
-
-Feel free to customize this README further based on your specific project details. Providing clear and concise documentation will make it easier for others to use and contribute to your JioSaavan Clone project on GitHub.
