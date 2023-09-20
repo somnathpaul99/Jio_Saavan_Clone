@@ -9,7 +9,6 @@
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
@@ -46,3 +45,48 @@ The technology stack used for this project includes:
 - React Icons
 - Material-UI (MUI)
 - react-multi-carousel
+
+## Getting Started
+
+To get started with the JioSaavan Clone project, follow these steps:
+
+1. Clone the repository to your local machine:
+
+   git clone https://github.com/somnathpaul99/Jio_Saavan_Clone.git
+
+2. Install the project dependencies:
+
+- cd Jio_Saavan_Clone
+- npm install
+
+3. Start the development server:
+
+- npm run dev
+
+4. Open your web browser and access the project at http://localhost:5173/
+
+## Usage
+
+Once you have the project up and running, you can:
+
+- Sign up or log in to access personalized music features.
+- Search for songs by title or artist.
+- Create customized playlists based on mood.
+- Play, pause, and control the volume of songs and playlists.
+- Enjoy a user-friendly and responsive interface for a seamless music experience.
+
+## Contributing
+
+If you'd like to contribute to this project, please follow these guidelines:
+
+- Fork the repository.
+- Create a new branch for your feature or bug fix: git checkout -b feature-name.
+- Make your changes and commit them: git commit -m "Description of changes".
+- Push your changes to your fork: git push origin feature-name.
+- Create a pull request to the main repository's main branch.
+
+## License
+
+This project is licensed under the MIT License.
+
+Feel free to customize this README further based on your specific project details. Providing clear and concise documentation will make it easier for others to use and contribute to your JioSaavan Clone project on GitHub.
